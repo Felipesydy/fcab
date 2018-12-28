@@ -1,370 +1,205 @@
-<!doctype html>
-<html lang="en">
-
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>FCAB</title>
-  <meta name="description" content="Luxury is a premium adman dashboard template based on bootstrap">
-  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
-
-  <!-- theme customizier \ demo only -->
-  <link rel="stylesheet" href="login.html">
-  <script src="https://cdn.rawgit.com/Choopers/monitor/master/Template/examples/js/theme-customizer.js"></script>
-
-  <!-- core plugins -->
-  <link rel="stylesheet" href="https://cdn.rawgit.com/Choopers/monitor/master/Template/vendor/css/hamburgers.css">
-  <link rel="stylesheet" href="https://cdn.rawgit.com/Choopers/monitor/master/Template/vendor/bower_components/perfect-scrollbar/css/perfect-scrollbar.min.css">
-  <link rel="stylesheet" href="https://cdn.rawgit.com/Choopers/monitor/master/Template/vendor/bower_components/switchery/dist/switchery.min.css">
-  <link rel="stylesheet" href="https://cdn.rawgit.com/Choopers/monitor/master/Template/vendor/bower_components/sweetalert/dist/sweetalert.css">
-
-  <link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.7/css/select.dataTables.min.css">
-
-  <!-- site-wide styles -->
-  <link rel="stylesheet" href="https://cdn.rawgit.com/Choopers/monitor/master/Template/vendor/css/bootstrap.css">
-  <link rel="stylesheet" href="https://cdn.rawgit.com/Choopers/monitor/master/css/site.css">
-
-  <!-- plugins for the current page -->
-  <link rel="stylesheet" href="https://cdn.rawgit.com/Choopers/monitor/master/Template/vendor/bower_components/datatables.net-dt/css/jquery.dataTables.min.css">
+<%- include('componentes/header'); -%>
+<main class="site-main">
+  <header class="site-header">
 
 
-  <!-- current page styles -->
-  <link rel="stylesheet" href="https://cdn.rawgit.com/Choopers/monitor/master/Template/examples/css/demos/demos.css">
-  <link rel="stylesheet" href="https://cdn.rawgit.com/Choopers/monitor/master/Template/vendor/bower_components/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="https://cdn.rawgit.com/Choopers/monitor/master/Template/vendor/bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600">
-
-  <script src="https://cdn.rawgit.com/Choopers/monitor/master/Template/vendor/bower_components/breakpoints.js/dist/breakpoints.min.js"></script>
-  <script>Breakpoints({ xs: { min: 0, max: 575 }, sm: { min: 576, max: 767 }, md: { min: 768, max: 991 }, lg: { min: 992, max: 1199 }, xl: { min: 1200, max: Infinity } });</script>
-
-  <!-- Agregado Jorge -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
-    crossorigin="anonymous">
-
-
-</head>
-
-<body class="menubar-left menubar-dark">
-  <!--[if lt IE 10]>
-      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-  <nav class="site-navbar navbar fixed-top navbar-expand-md navbar-light bg-blue">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/">
-
-        <!--d   
-            <svg class="flip-y" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 32 32">
-                <img src="http://www.jumbo.cl/FO_IMGS/htmls/modal-verano/img/logojumbocl.png" width="50" height="50">       </svg>
-            -->
-        <span class="brand-name hidden-fold">FCAB</span>
-      </a>
-
-      <a href="main.html" class="hidden-fold hidden-sm-down" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-          <g transform="translate(.5 .5)" fill="none" stroke-linecap="square" stroke-miterlimit="10">
-            <path stroke="currentColor" d="M23 12c0-1.105-.895-2-2-2h-1.262c-.19-.732-.477-1.422-.852-2.058l.892-.892c.78-.78.78-2.047 0-2.828-.78-.78-2.047-.78-2.828 0l-.892.892c-.636-.375-1.326-.663-2.058-.852V3c0-1.104-.895-2-2-2s-2 .895-2 2v1.262c-.732.19-1.422.477-2.058.852l-.892-.892c-.78-.78-2.047-.78-2.828 0-.78.78-.78 2.047 0 2.828l.892.892C4.74 8.578 4.45 9.268 4.262 10H3c-1.104 0-2 .895-2 2s.895 2 2 2h1.262c.19.732.477 1.422.852 2.058l-.892.892c-.78.78-.78 2.047 0 2.828.78.78 2.047.78 2.828 0l.892-.892c.635.375 1.326.663 2.058.852V21c0 1.104.895 2 2 2s2-.895 2-2v-1.262c.732-.19 1.422-.477 2.058-.852l.892.892c.78.78 2.047.78 2.828 0 .78-.78.78-2.047 0-2.828l-.892-.892c.375-.635.663-1.326.852-2.058H21c1.104 0 2-.895 2-2z" />
-            <circle data-color="color-2" stroke="#52c03b" cx="12" cy="12" r="3" />
-          </g>
-        </svg>
-      </a>
-
-      <button data-toggle="menubar" class="mr-auto hidden-md-up hamburger hamburger--collapse js-hamburger" type="button">
-        <span class="hamburger-box">
-          <span class="hamburger-inner"></span>
-        </span>
-      </button>
-
-      <button type="button" class="navbar-toggler hidden-md-up collapsed" data-toggle="navbar-search">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="zmdi zmdi-hc-lg zmdi-search"></span>
-      </button>
-
-      <button type="button" class="navbar-toggler hidden-md-up collapsed" data-toggle="collapse" data-target="#site-navbar-collapse"
-        aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="zmdi zmdi-hc-lg zmdi-more"></span>
-      </button>
-    </div>
-    <!-- /.navbar-header -->
-
-    <div class="collapse navbar-collapse" id="site-navbar-collapse">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item hidden-sm-down">
-          <a class="nav-link" href="#">
-            <button data-toggle="menubar-fold" class="hamburger hamburger--arrowalt is-active js-hamburger" type="button">
-              <span class="hamburger-box">
-                <span class="hamburger-inner"></span>
-              </span>
-            </button>
+    <div class="breadcrumb">
+      <ol class="breadcrumb-tree">
+        <li class="breadcrumb-item">
+          <a href="#">
+            <span class="zmdi zmdi-home mr-1"></span>
+            <span>Home</span>
           </a>
         </li>
+        <li class="breadcrumb-item active"><a href="#">Tiempo y Distancias</a></li>
+      </ol>
 
 
+    </div><!-- /.breadcrumb -->
+  </header><!-- /.site-header -->
 
+  <div class="site-content">
+    <h2>Administracion de Tiempo y Distancia</h2>
+    <div class="simpleajaxuploader">
+      <div class="sauinner">
+        <form id="uploader_form" action="" method="POST">
+          <div id="filedrag">
+            <i class="fa fa-cloud-upload fa-3x faupload"></i><br>
 
-
-
-
-      </ul>
-
-      <ul class="navbar-nav">
-
-
-
-
-        <li class="nav-item dropdown">
-          <a class="nav-link site-user dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
-            <img class="nav-img" src="https://cdn.rawgit.com/Choopers/monitor/master/Template/global/images/user-img.png"
-              alt="">
-            <span class="nav-text hidden-sm-down ml-2">
-                <%=nombre_usuario%>
-            </span>
-            <i class="nav-caret hidden-sm-down zmdi zmdi-hc-sm zmdi-chevron-down"></i>
-          </a>
-          <div class="dropdown-menu dropdown-menu-right p-0" data-plugin="dropdownCaret">
-            <a class="dropdown-item dropdown-menu-cap">
-                <%=nombre_usuario%>
-            </a>
-
-
-            <a class="dropdown-item" href="/salir">
-              <i class="fa fa-power-off mr-3"></i>
-              <span>Desconectar</span>
-            </a>
+            Soltar archivos aquí
+            <div id="previewarea" class="sauinner">
+              <h3 align="center">Una vez seleccionado el archivo favor presionar subir </h3>
+            </div>
           </div>
-        </li>
-
-
-      </ul>
-      <!-- /.navbar-nav -->
-    </div>
-    <!-- /.navbar-collapse -->
-  </nav>
-  <!-- /.site-navbar -->
-
-
-
-  <div class="site-wrapper">
-    <aside class="site-menubar">
-      <div class="site-menubar-inner">
-        <ul class="site-menu">
-
-          <!-- Menu de Navegacion JLM -->
-          <li class="menu-section-heading">MAIN NAVIGATION </li>
-
-
-          <li>
-            <a href="/">
-              <i class="menu-icon zmdi zmdi-account"></i>
-              <span class="menu-text">Usuarios</span>
-            </a>
-          </li>
-          <li class="menu-section-heading">DATA</li>
-          <li>
-            <a href="javascript:void(0)" class="submenu-toggle">
-              <i class="menu-icon zmdi zmdi-globe-alt"></i>
-              <span class="menu-text">Mantenedores</span>
-              <i class="menu-caret zmdi zmdi-hc-sm zmdi-chevron-right"></i>
-            </a>
-            <ul class="submenu">
-              <li><a href="/itinerarios"><span class="menu-text">Itinerarios</span></a></li>
-              <li><a href="/tiempodistancia"><span class="menu-text">Tiempo y Distancia</span></a></li>
-              <li><a href="/zonas"><span class="menu-text">Zonas</span></a></li>
-              <li><a href="/parametros"><span class="menu-text">Parametros</span></a></li>
-              
-            </ul>
-          </li>
-          
-
-
-
-
-
-
-        </ul>
-        <!-- /.site-menu -->
+          <tr>
+            <p class="ex1"></p>
+          </tr>
+          <button class="btn btn-primary btn-lg btn-block" type="submit" id="uploadnow">Subir</button>
+        </form>
       </div>
-      <!-- /.site-menubar-inner -->
-    </aside>
-    <!-- /.site-menubar -->
-    <main class="site-main">
-      <header class="site-header">
 
-
-        <div class="breadcrumb">
-          <ol class="breadcrumb-tree">
-            <li class="breadcrumb-item">
-              <a href="#">
-                <span class="zmdi zmdi-home mr-1"></span>
-                <span>Home</span>
-              </a>
-            </li>
-            <li class="breadcrumb-item active"><a href="#">Timepo y Distancias</a></li>
-          </ol>
-
-
-        </div><!-- /.breadcrumb -->
-      </header><!-- /.site-header -->
-
-      <div class="site-content">
-        <h2>Administracion de Tiempo y Distancia</h2>
-        <div class="simpleajaxuploader">
-                <div class="sauinner">
-                  <form id="uploader_form" action="" method="POST">
-                    <div id="filedrag">
-                      <i class="fa fa-cloud-upload fa-3x faupload"></i><br>
-                      
-Soltar archivos aquí
-                      <div id="previewarea" class="sauinner">
-                        <h3 align="center">Una vez seleccionado el archivo favor presionar subir </h3>
-                      </div>
-                    </div>
-                    <tr><p class="ex1"></p></tr>
-                    <button class="btn btn-primary btn-lg btn-block" type="submit" id="uploadnow">Subir</button>
-                  </form>
-                </div>
-
-      </div><!-- /.site-content -->
+    </div><!-- /.site-content -->
 
 
 
 
+    <%- include('componentes/footer'); -%>
+    <!-- Script de Funcionalidades -->
 
-      <footer class="site-footer">
+    <script>
+      var filedrag = document.getElementById('filedrag');
+      var previewarea = document.getElementById('previewarea');
 
-      </footer><!-- /.site-footer -->
-    </main><!-- /.site-main -->
-  </div><!-- /.site-warpper -->
+      filedrag.addEventListener("dragover", FileIsOverElement, false);
+      filedrag.addEventListener("dragleave", FileIsOverElement, false);
+      filedrag.addEventListener("drop", FilesHaveBeenDropped, false);
+
+      function FileIsOverElement(e) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+
+      var thefiles = [];
+      function FilesHaveBeenDropped(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        FileIsOverElement(e);
+        var dropped = e.target.files || e.dataTransfer.files;
+        for (var i = 0; i < dropped.length; i++) {
+          thefiles.push(dropped[i]);
+          var newfilepreview = document.createElement('p');
+          newfilepreview.innerHTML = 'Nombre del archivo a subir ' + dropped[i].name;
+          previewarea.appendChild(newfilepreview);
+        }
+      }
+
+      var uploader_form = document.getElementById('uploader_form');
+      var uploadnow = document.getElementById('uploadnow');
+      uploader_form.onsubmit = function (event) {
+        event.preventDefault();
+        if (thefiles.length <= 0) { alert('Drag a file'); return; }
+        if (thefiles.length > 1) { alert('No se puede subir mas de 1 Archivo'); return; }
+        uploadnow.innerHTML = 'Subiendo...';
+        var formData = new FormData();
+        for (var i = 0; i < thefiles.length; i++) {
+          formData.append('myfiles[]', thefiles[i], thefiles[i].name);
+        }
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/subir_tiempodistancia', true);
+        xhr.onload = function () {
+          if (xhr.status === 200) {
+            uploadnow.innerHTML = 'Subir';
+            previewarea.innerHTML = "<div class='alert alert-success'>Se ha cargado correctamente el Archivo</div>";
+          }
+          else
+            alert('A Ocurrido un error!');
+        };
+        xhr.send(formData);
+      };
 
 
-
-  <!-- core plugins -->
-  <!-- Añadido Jorge -->
-  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
-  <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.js"></script>
-  <!-- Fin-->
-
-
-  <script src="https://cdn.rawgit.com/Choopers/monitor/master/Template/vendor/bower_components/jquery/dist/jquery.min.js"></script>
-  <script src="https://cdn.rawgit.com/Choopers/monitor/master/Template/vendor/bower_components/popper.js/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.rawgit.com/Choopers/monitor/master/Template/vendor/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="https://cdn.rawgit.com/Choopers/monitor/master/Template/vendor/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-  <script src="https://cdn.rawgit.com/Choopers/monitor/master/Template/vendor/bower_components/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js"></script>
-  <script src="https://cdn.rawgit.com/Choopers/monitor/master/Template/vendor/bower_components/switchery/dist/switchery.min.js"></script>
-  <script src="https://cdn.rawgit.com/Choopers/monitor/master/Template/vendor/bower_components/waypoints/lib/jquery.waypoints.min.js"></script>
-  <script src="https://cdn.rawgit.com/Choopers/monitor/master/Template/vendor/bower_components/waypoints/lib/shortcuts/sticky.min.js"></script>
-  <script src="https://cdn.rawgit.com/Choopers/monitor/master/Template/vendor/bower_components/counterup/jquery.counterup.min.js"></script>
-  <script src="https://cdn.rawgit.com/Choopers/monitor/master/Template/vendor/bower_components/sweetalert/dist/sweetalert.min.js"></script>
-  <script src="https://cdn.rawgit.com/Choopers/monitor/master/Template/vendor/js/jquery.sparkline.min.js"></script>
-  <script src="https://cdn.rawgit.com/Choopers/monitor/master/Template/global/js/plugins/dropdown-caret.js"></script>
-  <script src="https://cdn.rawgit.com/Choopers/monitor/master/Template/global/js/plugins/firstlitter.js"></script>
-  <script src="https://cdn.rawgit.com/Choopers/monitor/master/Template/global/js/plugins/video-modal.js"></script>
-
-  <!-- plugins for the current page -->
-  <script src="https://cdn.rawgit.com/Choopers/monitor/master/Template/vendor/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-
-
-  <!-- site-wide scripts -->
-  <script src="https://cdn.rawgit.com/Choopers/monitor/master/Template/global/js/main.js"></script>
-  <script src="https://cdn.rawgit.com/Choopers/monitor/master/js/site.js"></script>
-  <script src="https://cdn.rawgit.com/Choopers/monitor/master/js/navbar.js"></script>
-  <script src="https://cdn.rawgit.com/Choopers/monitor/master/js/menubar.js"></script>
-  <script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
-
-  <!-- current page scripts -->
-
-  <script src="https://cdn.rawgit.com/Choopers/monitor/master/Template/examples/js/demos/tables.datatables.js"></script>
-
-</body>
-
-</html>
-
-<!-- Script de Funcionalidades -->
-
-<script>
-var filedrag = document.getElementById('filedrag');
-var previewarea = document.getElementById('previewarea');
-
-filedrag.addEventListener("dragover", FileIsOverElement, false);
-filedrag.addEventListener("dragleave", FileIsOverElement, false);
-filedrag.addEventListener("drop", FilesHaveBeenDropped, false);
-
-function FileIsOverElement(e)
-{
-  e.stopPropagation();
-  e.preventDefault();
-}
-
-var thefiles = [];
-function FilesHaveBeenDropped(e)
-{
-  e.stopPropagation();
-  e.preventDefault();
-  FileIsOverElement(e);
-  var dropped = e.target.files || e.dataTransfer.files;
-  for (var i = 0; i<dropped.length; i++)
-  {
-    thefiles.push(dropped[i]);
-    var newfilepreview = document.createElement('p');
-    newfilepreview.innerHTML = 'Nombre del archivo a subir ' + dropped[i].name;
-    previewarea.appendChild(newfilepreview);
-  }
-}
-
-var uploader_form = document.getElementById('uploader_form');
-var uploadnow     = document.getElementById('uploadnow');
-uploader_form.onsubmit = function(event)
-{
-  event.preventDefault();
-  if(thefiles.length<=0) {alert('Drag a file'); return; }
-  if(thefiles.length>1) {alert('No se puede subir mas de 1 Archivo');return; }
-  uploadnow.innerHTML = 'Subiendo...';
-  var formData = new FormData();
-  for (var i = 0; i < thefiles.length; i++)
-  {
-    formData.append('myfiles[]', thefiles[i], thefiles[i].name);
-  }
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', '/subir_tiempodistancia', true);
-  xhr.onload = function () {
-    if (xhr.status === 200)
-    {
-      uploadnow.innerHTML = 'Subir';
-     previewarea.innerHTML = "<div class='alert alert-success'>Se ha cargado correctamente el Archivo</div>";
-    }
-    else
-      alert('A Ocurrido un error!');
-  };
-  xhr.send(formData);
-};
-
- 
-</script>
+    </script>
 
 
 
-<style>
-@-ms-viewport{ width: device-width; }
-body { background: white; font-family: 'Lato', sans-serif; font-size: 1em; line-height: 1em; letter-spacing: .05em; margin: 0; }
-header { background: #39527b; padding: 20px 0; }
-.btw { background: white; padding:2px 20px; text-align: center; position:fixed; top:0px; line-height:3em; }
-.btwlink { color: white; text-decoration: none; font-size: 12px; }
-h1.heading { line-height: 1.1em;  text-align: center;  font-weight: 400;  font-size: 1.7em;  color: #EDF7F2; margin-top: 40px;}
-div.simpleajaxuploader {width: 900px;margin: 2% auto;max-width: 95%;min-height: 400px;border-radius: 5px;color: #FFF;font-size: 1.5em; }
-div.sauinner {width: 96%;  padding: 2%; }
-button.button { background: black; border: none; padding: 20px 50px; font-size: 1em; color: white; display: block; margin: 40px auto 0px auto; cursor: pointer; font: inherit; width: 100%;}
-div#filedrag { width: 100%; background: #39527b; padding: 40px 20px; text-align: center; border: 1px dotted #971414; box-sizing:border-box; }
-.previewarea { background: rgb(126, 64, 64); padding: 20px; box-sizing:border-box; width: 100%; margin-top: 30px; font-size: 12px; text-align: left; }
-.previewarea h3 { font-weight: normal; }
-p.ex1 {
-  padding-top: 25px;
-}
-</style>
+    <style>
+      @-ms-viewport {
+        width: device-width;
+      }
 
-<link href='http://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
-  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+      body {
+        background: white;
+        font-family: 'Lato', sans-serif;
+        font-size: 1em;
+        line-height: 1em;
+        letter-spacing: .05em;
+        margin: 0;
+      }
+
+      header {
+        background: #39527b;
+        padding: 20px 0;
+      }
+
+      .btw {
+        background: white;
+        padding: 2px 20px;
+        text-align: center;
+        position: fixed;
+        top: 0px;
+        line-height: 3em;
+      }
+
+      .btwlink {
+        color: white;
+        text-decoration: none;
+        font-size: 12px;
+      }
+
+      h1.heading {
+        line-height: 1.1em;
+        text-align: center;
+        font-weight: 400;
+        font-size: 1.7em;
+        color: #EDF7F2;
+        margin-top: 40px;
+      }
+
+      div.simpleajaxuploader {
+        width: 900px;
+        margin: 2% auto;
+        max-width: 95%;
+        min-height: 400px;
+        border-radius: 5px;
+        color: #FFF;
+        font-size: 1.5em;
+      }
+
+      div.sauinner {
+        width: 96%;
+        padding: 2%;
+      }
+
+      button.button {
+        background: black;
+        border: none;
+        padding: 20px 50px;
+        font-size: 1em;
+        color: white;
+        display: block;
+        margin: 40px auto 0px auto;
+        cursor: pointer;
+        font: inherit;
+        width: 100%;
+      }
+
+      div#filedrag {
+        width: 100%;
+        background: #39527b;
+        padding: 40px 20px;
+        text-align: center;
+        border: 1px dotted #971414;
+        box-sizing: border-box;
+      }
+
+      .previewarea {
+        background: rgb(126, 64, 64);
+        padding: 20px;
+        box-sizing: border-box;
+        width: 100%;
+        margin-top: 30px;
+        font-size: 12px;
+        text-align: left;
+      }
+
+      .previewarea h3 {
+        font-weight: normal;
+      }
+
+      p.ex1 {
+        padding-top: 25px;
+      }
+    </style>
+
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">

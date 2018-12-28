@@ -12,7 +12,7 @@
             <span>Home</span>
           </a>
         </li>
-        <li class="breadcrumb-item active"><a href="#">Listar Casos</a></li>
+        <li class="breadcrumb-item active"><a href="#">Parametros</a></li>
       </ol>
 
 
@@ -20,22 +20,20 @@
   </header><!-- /.site-header -->
 
   <div class="site-content">
-    <h2>Maestro de Usuarios</h2>
+    <h2>Administracion de Parametros</h2>
 
 
 
 
-    <button type="button" class="btn btn-success" onclick="agregar()">Agregar Usuarios</button>
+    <button type="button" class="btn btn-success" onclick="agregar()">Agregar Parametros</button>
 
 
     <table id="table" class="table table-striped table-bordered">
       <thead>
         <tr>
-          <th>Nombre</th>
-          <th>Email</th>
-          <th>Usuario</th>
-          <th>Clave</th>
-          <th>Tipo</th>
+          <th>Tipo Parametro</th>
+          <th>Valor</th>
+          <th>Descripción</th>
           <th>Acción</th>
         </tr>
       </thead>
@@ -43,7 +41,7 @@
       </tbody>
     </table>
     <!-- Modal -->
-    <div class="modal fade" id="modal_usuarios" role="dialog">
+    <div class="modal fade" id="modal_parametros" role="dialog">
       <div class="modal-dialog">
         <div class="modal-content">
           <!-- Modal Header -->
@@ -62,39 +60,33 @@
 
               <div class="form-group">
                 <input type="hidden" value="" name="id" /> <!-- Dato Oculto para manejar Id -->
-                <label for="inputName">Nombre</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresar Nombre" />
-                <span class="help-block"></span>
-              </div>
-              <div class="form-group">
-                <label for="inputEmail">Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Ingresar Email" />
-                <span class="help-block"></span>
-              </div>
-              <div class="form-group">
-                <label for="inputEmail">Usuario</label>
-                <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Ingresar Usuario" />
-                <span class="help-block"></span>
-              </div>
-              
-              <div class="form-group">
-                <label for="inputEmail">Clave</label>
-                <input type="email" class="form-control" id="clave" name="clave" placeholder="Ingresar Clave" />
-                <span class="help-block"></span>
-              </div>
-              <div class="form-group">
-                <label for="inputEmail">Tipo</label>
+                <label for="inputName">Tipo Parámetro</label>
+                <select class="form-control" name="parametro" id="parametro">
 
-                <select class="form-control" name="tipo" id="tipo">
-
-                  <option value="0">Seleccionar Tipo Rol</option>
-                  <option value="1">Super</option>
-                  <option value="2">Master</option>
-                  <option value="3">Optimiza</option>
+                  <option value="0">Seleccionar parámetros</option>
+                  <option value="1">Días de trabajo</option>
+                  <option value="2">Jornada Efectiva Maxima</option>
+                  <option value="3">Jornada Maxima</option>
+                  <option value="4">Descanso entre viajes</option>
+                  <option value="5">Tiempo máximo de traslado Terrestre</option>
+                  <option value="6">Tiempo de cambio de ropa</option>
+                  <option value="7">Tiempo de Charla de seguridad</option>
 
                 </select>
                 <span class="help-block"></span>
+            
               </div>
+              <div class="form-group">
+                <label for="inputEmail">Valor</label>
+                <input type="text" class="form-control" id="valor" name="valor" placeholder="Ingresar valor" />
+                <span class="help-block"></span>
+              </div>
+              <div class="form-group">
+                <label for="inputEmail">Descripción</label>
+                <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Ingresar Descripción" />
+                <span class="help-block"></span>
+              </div>
+              
 
             </form>
           </div>
@@ -140,7 +132,7 @@
         "serverSide": true,
         "searching": false,
         "ajax": {
-          "url": "/listar_usuarios",
+          "url": "/listar_parametros",
           "type": "POST"
         },
         dom: 'Bfrtip',
@@ -213,8 +205,8 @@
       $('#form')[0].reset();
       $('.form-group').removeClass('has-error');
       $('.help-block').empty();
-      $('#modal_usuarios').modal('show');
-      $('.modal-title').text('Añadir Usuarios');
+      $('#modal_parametros').modal('show');
+      $('.modal-title').text('Añadir Parametros');
 
     }
 
@@ -228,9 +220,9 @@
 
 
       if (save_method == 'add') {
-        url = "/insertar_usuarios";
+        url = "/insertar_parametros";
       } else {
-        url = "/actualizar_usuarios";
+        url = "/actualizar_parametros";
       }
 
 
@@ -242,7 +234,7 @@
         success: function (data) {
 
           if (data.status) {
-            $('#modal_usuarios').modal('hide');
+            $('#modal_parametros').modal('hide');
             reload_table();
           } else {
             for (var i = 0; i < data.inputerror.length; i++) {
@@ -274,21 +266,19 @@
       idOrderVtex = idOrderVtex.replace('/', '');
 
       $.ajax({
-        url: "/obtener_por_id_usuarios",
+        url: "/obtener_por_id_parametros",
         type: "POST",
         data: { "id": idOrderVtex },
         dataType: "JSON",
         success: function (data) {
 
           $('[name="id"]').val(idOrderVtex);
-          $('[name="nombre"]').val(data.nombre);
-          $('[name="email"]').val(data.email);
-          $('[name="usuario"]').val(data.usuario);
-          $('[name="clave"]').val(data.clave);
-          $('[name="tipo"]').val(data.tipo);
+          $('[name="parametro"]').val(data.parametro);
+          $('[name="valor"]').val(data.valor);
+          $('[name="descripcion"]').val(data.descripcion);
 
-          $('#modal_usuarios').modal('show'); // show bootstrap modal when complete loaded
-          $('.modal-title').text('Editar Usuarios'); // Set title to Bootstrap modal title
+          $('#modal_parametros').modal('show'); 
+          $('.modal-title').text('Editar Usuarios'); 
 
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -304,7 +294,7 @@
       if (confirm('Se Encuentra seguro de Eliminar los Datos?')) {
 
         $.ajax({
-          url: "/eliminar_usuarios/" + idOrderVtex,
+          url: "/eliminar_parametros/" + idOrderVtex,
           type: "POST",
           dataType: "JSON",
           success: function (data) {
@@ -330,4 +320,3 @@
     }
   </style>
 
-  <

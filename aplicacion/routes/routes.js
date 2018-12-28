@@ -33,6 +33,15 @@ api.post('/obtener_por_id_usuarios', usuarios.obtener_por_id_usuarios);
 api.post('/actualizar_usuarios', usuarios.actualizar_usuarios);
 api.post('/eliminar_usuarios/:id', usuarios.eliminar_usuarios);
 
+var parametros = require('../controllers/controller_parametros');
+ 
+
+api.post('/listar_parametros', parametros.listar_parametros);
+api.post('/insertar_parametros', parametros.insertar_parametros);
+api.post('/obtener_por_id_parametros', parametros.obtener_por_id_parametros);
+api.post('/actualizar_parametros', parametros.actualizar_parametros);
+api.post('/eliminar_parametros/:id', parametros.eliminar_parametros);
+
 
 
 // Vistas
@@ -77,6 +86,31 @@ api.get('/usuarios', function (req, res) {
     else {
         res.type('text/html');
         res.render('usuarios', {
+            nombre_usuario: session,
+        }, function (err, html) {
+            if (err) throw err;
+            res.send(html);
+        });
+    }
+
+});
+
+api.get('/parametros', function (req, res) {
+    let session = req.session.nombre_usuario;
+
+
+
+    if (typeof session === 'undefined') {
+        res.type('text/html');
+        res.render('index', {
+        }, function (err, html) {
+            if (err) throw err;
+            res.send(html);
+        });
+    }
+    else {
+        res.type('text/html');
+        res.render('parametros', {
             nombre_usuario: session,
         }, function (err, html) {
             if (err) throw err;

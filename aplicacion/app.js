@@ -42,7 +42,7 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://mongoadmin:M0nG0DB18@146.83.7.46:20017/admin/datamaster')
+mongoose.connect('mongodb://jorge:morrigan123@cotagro.cl:27017/admin')
   .then(db => console.log('MongoDB Conectado'))
   .catch(err => console.log(err));
 

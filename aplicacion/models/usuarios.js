@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 const TaskSchema = Schema({
   nombre: String,
+  email: String,
   usuario: String,
   clave: String,
   tipo: String

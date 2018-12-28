@@ -68,6 +68,7 @@ const listar_usuarios = (async (req, res) => {
     listar.forEach(element => {
       datos_tabla.data.push(new Array(
         element.nombre,
+        element.email,
         element.usuario,
         element.clave,
         element.tipo,
@@ -77,86 +78,9 @@ const listar_usuarios = (async (req, res) => {
     });
     res.json(datos_tabla);
 
-
-
   }
 
-  /*
-    let tracking = new modelo_tracking.modelo_tracking();
-    tracking.contar_datos();
-  
-    let datos_tabla;
-    let folio;
-    let search = req.body["search[value]"];
-    let sap;
-  
-    if (search != "") {
-        console.log("Buscando por IdVtex: " + search);
-        datos_tabla = { data: [], recordsTotal: 10, recordsFiltered: parseInt(await tracking.contar_datos_busqueda_idVtex(search.toString())) };
-  
-        await tracking.obtener_tabla_busqueda(search.toString(), parseInt(req.body.length), parseInt(req.body.start)).then(function(result) {
-            data = (result);
-        });
-        data.forEach(element => {
-  
-            let orders = JSON.parse(element.json_orders);
-            let datos_envio = orders.shipping;
-  
-            datos_tabla.data.push(new Array(
-                (element.order_number),
-                (element.name_client),
-                (element.status),
-                datos_envio[0].address.street + " N°" + datos_envio[0].address.number,
-                datos_envio[0].address.state,
-                datos_envio[0].address.city,
-                moment(element.picking_estimated).format('DD/MM/YYYY'),
-                //     element.time_interval,
-                moment(element.shipping_date).format('DD/MM/YYYY'),
-                moment(element.date).format('DD/MM/YYYY'),
-                "<a class='_success' onclick='buscar(" + element.id + ")' title='ver detalle' name='ver_detalle' id='ver_detalle'><i class='fas fa-info-circle'></i></a> | <a title='ver transporte' class='_success' onclick='ver_transporte(" + element.id + ")' name='ver_detalle' id='ver_detalle'><i class='fas fa-truck'></i></a>"
-            ))
-  
-  
-  
-  
-  
-        });
-  
-    } else {
-  
-        datos_tabla = { data: [], recordsTotal: 10, recordsFiltered: parseInt(await tracking.contar_datos()) };
-  
-        await tracking.obtener_tabla(parseInt(req.body.length), parseInt(req.body.start)).then(function(result) {
-            data = (result);
-  
-        });
-        data.forEach(element => {
-  
-            let orders = JSON.parse(element.json_orders);
-            let datos_envio = orders.shipping;
-  
-            datos_tabla.data.push(new Array(
-                (element.order_number),
-                (element.name_client),
-                (element.status),
-                datos_envio[0].address.street + " N°" + datos_envio[0].address.number,
-                datos_envio[0].address.state,
-                datos_envio[0].address.city,
-                moment(element.picking_estimated).format('DD/MM/YYYY'),
-                //     element.time_interval,
-                moment(element.shipping_date).format('DD/MM/YYYY'),
-                moment(element.date).format('DD/MM/YYYY'),
-                "<a class='_success' onclick='buscar(" + element.id + ")' title='ver detalle' name='ver_detalle' id='ver_detalle'><i class='fas fa-info-circle'></i></a> | <a title='ver transporte' class='_success' onclick='ver_transporte(" + element.id + ")' name='ver_detalle' id='ver_detalle'><i class='fas fa-truck'></i></a>"
-            ))
-  
-  
-  
-  
-        });
-    }
-    res.json(datos_tabla);
-  */
-});
+ });
 
 
 const validar_session = ((req, res) => {
@@ -186,52 +110,55 @@ const validar_session = ((req, res) => {
 //################################ Mantenedores <usuarios> #####################################
 
 const insertar_usuarios = (async (req, res) => {
-  console.log("Datos a Insertar");
-  console.log(req.body);
-  const User = require('../models/usuarios');
-  const usuarios = new User(req.body);
-  let salida = await usuarios.save();
-  console.log(salida);
-  mensaje = {
-    status: true,
+  console.log("########## Insertar Usuarios #################");
+  let data, mensaje;
+  await validar(req.body).then(function (result) {
+    data = (result);
+  });
+
+  if (data.status) {
+    const user = new usuarios(req.body);
+    let salida = await user.save();
+    mensaje = {
+      status: true,
+    }
+    res.json(mensaje);
+  } else {
+    res.json(data);// Salida con errores
   }
-  res.json(mensaje);
 
 });
 const obtener_por_id_usuarios = (async (req, res) => { // Devolver al formulario los datos
   console.log("======= Obtener por ID ===========");
-
   const listar = await usuarios.find();
   contador = listar.length
-
   const user = await usuarios.find({ '_id': req.body.id });
   console.log(user);
-
   res.json(user[0]);
-
-
 });
 const actualizar_usuarios = (async (req, res) => {
-  console.log("Datos a Actualizar");
-  console.log(req.body);
+  let data, mensaje;
 
-  let data_actualizar = {
-    "nombre": req.body.nombre,
-    "usuario": req.body.usuario,
-    "clave": req.body.clave,
-    "tipo": req.body.tipo,
+  await validar(req.body).then(function (result) {
+    data = (result);
+  });
+  if (data.status) {
+    let data_actualizar = {
+      "nombre": req.body.nombre,
+      "email": req.body.usuario,
+      "usuario": req.body.usuario,
+      "clave": req.body.clave,
+      "tipo": req.body.tipo,
+    }
+    let salida = await usuarios.update({ _id: req.body.id }, data_actualizar);
+    console.log(salida);
+    mensaje = {
+      status: true,
+    }
+    res.json(mensaje);
+  } else {
+    res.json(data);// Salida con errores
   }
-
-
-
-
-
-  let salida = await usuarios.update({ _id: req.body.id }, data_actualizar);
-  console.log(salida);
-  mensaje = {
-    status: true,
-  }
-  res.json(mensaje);
 });
 
 const eliminar_usuarios = (async (req, res) => {
@@ -246,7 +173,55 @@ const eliminar_usuarios = (async (req, res) => {
 
 });
 
- 
+function validar(body) {
+  console.log("Entro al validar");
+  try {
+    return new Promise(resolve => {
+      let data;
+      data = { error_string: [], inputerror: [], status: true };
+
+      if (body.nombre == '') {
+        data.inputerror.push((('nombre')));
+        data.error_string.push((('Debes indicar un nombre')));
+        data.status = false;
+      }
+      if (body.email == '') {
+        data.inputerror.push((('email')));
+        data.error_string.push((('Debes indicar un email')));
+        data.status = false;
+      }
+      if (body.usuario == '') {
+        data.inputerror.push((('usuario')));
+        data.error_string.push((('Debes indicar un usuario')));
+        data.status = false;
+      }
+      if (body.clave == '') {
+        data.inputerror.push((('clave')));
+        data.error_string.push((('Debes indicar una clave')));
+        data.status = false;
+      }
+      /* */
+      if (body.tipo == '0') {
+        data.inputerror.push((('tipo')));
+        data.error_string.push((('Debes seleccionar un tipo de usuario')));
+        data.status = false;
+      }
+
+      if (data.status === false) {
+        console.log(data);
+        resolve(data);
+      } else {
+        resolve(data);
+      }
+    });
+  } catch (err) {
+    throw new Error('Error al validar formulario ' + err);
+  }
+
+
+}
+
+
 
 
 
