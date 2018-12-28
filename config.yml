@@ -1,0 +1,7 @@
+app:
+  port: 80
+mongo:
+  url: mongodb://jorge:morrigan123@cotagro.cl:27017/
+  bd: admin
+
+    

@@ -1,0 +1,48 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Contenedor",
+  "main": "app.js",
+  "author": "Jorge Luis Maureira Arriagada",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "latest",
+    "cls": "latest",
+    "continuation-local-storage": "latest",
+    "csvjson": "^5.1.0",
+    "diff": "latest",
+    "ejs": "latest",
+    "express": "latest",
+    "express-session": "^1.15.6",
+    "formidable": "^1.2.1",
+    "fs": "latest",
+    "js-yaml": "latest",
+    "jwt-simple": "latest",
+    "mathjs": "latest",
+    "moment": "latest",
+    "mongodb": "^3.1.10",
+    "mongoose": "latest",
+    "morgan": "latest",
+    "pkginfo": "latest",
+    "request": "latest",
+    "save": "^2.3.3",
+    "underscore": "latest",
+    "winston": "latest"
+  },
+  "scripts": {
+    "dev": "nodemon --exec babel-node aplicacion/app.js",
+    "build": "babel aplicacion --out-dir dist",
+    "start": "node dist/app.js",
+    "test": "./node_modules/.bin/mocha"
+  },
+  "devDependencies": {
+    "babel-cli": "latest",
+    "babel-plugin-transform-runtime": "latest",
+    "babel-polyfill": "latest",
+    "babel-preset-env": "latest",
+    "chai": "latest",
+    "chai-http": "latest",
+    "mocha": "latest",
+    "nodemon": "latest"
+  }
+}
