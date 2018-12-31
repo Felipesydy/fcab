@@ -25,19 +25,19 @@ const promiseMongo = ((event,cambio) => {
         MongoClient.connect(url, function(err, db) {
             if (err) throw err;
             var dbo = db.db(gyml.mongo.bd);
-            dbo.collection("zonas").drop(function(err, delOK) {
+            dbo.collection("zona").drop(function(err, delOK) {
               if (err) {
                 resolve({"code":"500", "message":"Drop Collection Error"})
               }
               if (delOK) console.log("Collection deleted");
-              dbo.createCollection("zonas", function(err, res) {
+              dbo.createCollection("zona", function(err, res) {
                 if (err) {
                     resolve({"code":"500", "message":"Create Collection Error"})
                 }
                 console.log("Collection created!");
                 let data = event;
 
-                dbo.collection("zonas").insertMany(data, function(err, res) {
+                dbo.collection("zona").insertMany(data, function(err, res) {
                   if (err) {
                     resolve({"code":"500", "message":"Insert Document Error"})
                   }
