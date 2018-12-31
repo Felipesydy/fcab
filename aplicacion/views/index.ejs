@@ -38,7 +38,7 @@
             <p><span class="fa fa-lock"></span><input type="password" name="clave" Placeholder="Clave" required></p> <!-- JS because of IE support; better: placeholder="Password" -->
             
              <div>
-                                <span style="width:48%; text-align:left;  display: inline-block;"><a class="small-text" href="#">Olvidó la Contraseña?</a></span>
+                                <span style="width:48%; text-align:left;  display: inline-block;"><a class="small-text" onclick="alerta()">Olvidó la Contraseña?</a></span>
                                 <span style="width:50%; text-align:right;  display: inline-block;"><input type="submit" value="Entrar" onclick="conectar()"></span>
                  
                             </div>
@@ -239,6 +239,17 @@ fieldset{
 </html>
 
 <script>
+        function alerta() {
+            var mensaje;
+            var opcion = confirm("Favor contacte a su administrador de sistema");
+            if (opcion == true) {
+                mensaje = "Has clickado OK";
+                return true;
+            } else {
+                mensaje = "Has clickado Cancelar";
+                return false
+            }        
+        }
   function conectar() {
                             $.ajax({
                                 url: "/login",
@@ -253,6 +264,7 @@ fieldset{
                                     } else {
                                         //	alert(data.message);
                                         document.getElementById('error').innerHTML = "<h5 style='color:white;'>"+data.message+"</h5>"
+                                        confirm(data.message);
                                         $('#alerta').toggle();
                                     }
                                 },

@@ -70,9 +70,10 @@ const listar_usuarios = (async (req, res) => {
         element.nombre,
         element.email,
         element.usuario,
-        element.clave,
+        //element.clave,
+        "********",
         element.tipo,
-        "<a class='_success' onclick='editar(/" + element._id + "/)' title='ver detalle' name='ver_detalle' id='ver_detalle'><i class='fas fa-edit'></i></a> | <a title='ver transporte' class='_success' onclick='eliminar(/" + element._id + "/)' name='ver_detalle' id='ver_detalle'><i class='fas fa-close'></i></a>"
+        "<a class='_success' onclick='editar(/" + element._id + "/)' title='Editar' name='ver_detalle' id='ver_detalle'><i class='fas fa-edit'></i></a> | <a title='Eliminar' class='_success' onclick='eliminar(/" + element._id + "/)' name='ver_detalle' id='ver_detalle'><i class='fas fa-close'></i></a>"
       ))
 
     });
@@ -145,7 +146,7 @@ const actualizar_usuarios = (async (req, res) => {
   if (data.status) {
     let data_actualizar = {
       "nombre": req.body.nombre,
-      "email": req.body.usuario,
+      "email": req.body.email,
       "usuario": req.body.usuario,
       "clave": req.body.clave,
       "tipo": req.body.tipo,
@@ -198,6 +199,16 @@ function validar(body) {
       if (body.clave == '') {
         data.inputerror.push((('clave')));
         data.error_string.push((('Debes indicar una clave')));
+        data.status = false;
+      }
+      if (body.clave2 == '') {
+        data.inputerror.push((('clave2')));
+        data.error_string.push((('Debes reingresar una clave')));
+        data.status = false;
+      }
+      if (body.clave2 != body.clave) {
+        data.inputerror.push((('clave2')));
+        data.error_string.push((('Las claves no coinciden')));
         data.status = false;
       }
       /* */

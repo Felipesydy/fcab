@@ -19,15 +19,12 @@
   </header><!-- /.site-header -->
 
   <div class="site-content">
-    <h2>Administracion de Itinerarios</h2>
+    <h2>Maestro de Itinerarios</h2>
     <div class="simpleajaxuploader">
       <div class="sauinner">
         <form id="uploader_form" action="" method="get">
-
           <div id="filedrag">
             <i class="fa fa-cloud-upload fa-3x faupload"></i><br>
-            Subir <input name="uploadedfile" type="file" />
-            <p></p>
             Soltar archivos aquí
             <div id="previewarea" class="sauinner">
               <h3 align="center">Una vez seleccionado el archivo favor presionar subir </h3>
@@ -37,6 +34,11 @@
             <p class="ex1"></p>
           </tr>
           <button class="btn btn-primary btn-lg btn-block" type="submit" id="uploadnow">Subir</button>
+          <tr>
+              <div class="btn btn-primary btn-lg btn-block">
+                  <input type="file" id="input-file-now" class="file-upload" />
+                </div>
+          </tr>
         </form>
       </div>
 

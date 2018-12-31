@@ -35,7 +35,7 @@ switch(parseInt(element.parametro)){
         tipo_parametro,
         element.valor,
         element.descripcion,
-        "<a class='_success' onclick='editar(/" + element._id + "/)' title='ver detalle' name='ver_detalle' id='ver_detalle'><i class='fas fa-edit'></i></a> | <a title='ver transporte' class='_success' onclick='eliminar(/" + element._id + "/)' name='ver_detalle' id='ver_detalle'><i class='fas fa-close'></i></a>"
+        "<a class='_success' onclick='editar(/" + element._id + "/)' title='Editar' name='ver_detalle' id='ver_detalle'><i class='fas fa-edit'></i></a> | <a title='Eliminar' class='_success' onclick='eliminar(/" + element._id + "/)' name='ver_detalle' id='ver_detalle'><i class='fas fa-close'></i></a>"
       ))
     });
     res.json(datos_tabla);
