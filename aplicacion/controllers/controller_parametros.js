@@ -17,31 +17,40 @@ const listar_parametros = (async (req, res) => {
     const listar = await parametros.find();
     contador = listar.length
     datos_tabla = { data: [], recordsTotal: 10, recordsFiltered: parseInt(contador) };
-/*
-     let data_salida;
-    await format_table(listar).then(function (result) {
-      data_salida = (result);
+    /*
+         let data_salida;
+        await format_table(listar).then(function (result) {
+          data_salida = (result);
+        });
+    
+    
+        console.log("Data salida Listar");
+    console.log(data_salida.data);
+    */
+    let nombre_parametro;
+    const tipoparametro = require('../models/tipo_parametro');
+    const resultado = await tipoparametro.find();
+
+    listar.forEach(element => {
+      resultado.forEach(element2 => {
+        if (element2.codigo == element.parametro) {
+          nombre_parametro = element2.nombre;
+        }
+      })
+
+      datos_tabla.data.push(new Array(
+        nombre_parametro,
+        element.valor,
+        element.descripcion,
+        "<a class='_success' onclick='editar(/" + element._id + "/)' title='Editar' name='ver_detalle' id='ver_detalle'><i class='fas fa-edit'></i></a> | <a title='Eliminar' class='_success' onclick='eliminar(/" + element._id + "/)' name='ver_detalle' id='ver_detalle'><i class='fas fa-close'></i></a>"
+      ))
     });
-
-
-    console.log("Data salida Listar");
-console.log(data_salida.data);
-*/
-listar.forEach( element => {
-  
-  datos_tabla.data.push(new Array(
-    element.parametro,
-    element.valor,
-    element.descripcion,
-    "<a class='_success' onclick='editar(/" + element._id + "/)' title='Editar' name='ver_detalle' id='ver_detalle'><i class='fas fa-edit'></i></a> | <a title='Eliminar' class='_success' onclick='eliminar(/" + element._id + "/)' name='ver_detalle' id='ver_detalle'><i class='fas fa-close'></i></a>"
-  ))
-});
     res.json(datos_tabla);
   }
 });
-
+/*
 const format_table = (async (datos) => {
- let datos_tabla = { data: [] };
+  let datos_tabla = { data: [] };
 
   datos.forEach(async element => {
     let tipo_parametro;
@@ -61,7 +70,7 @@ const format_table = (async (datos) => {
   return datos_tabla;
 
 })
-
+*/
 const obtener_por_id_tipoparametro = (async (req, res) => { // Devolver al formulario los datos
   const tipoparametro = require('../models/tipo_parametro');
   const listar = await tipoparametro.find();

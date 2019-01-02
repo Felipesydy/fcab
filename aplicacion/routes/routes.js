@@ -230,6 +230,55 @@ api.get('/zonas', function (req, res) {
 
 });
 
+api.get('/miscasos', function (req, res) {
+    let session = req.session.nombre_usuario;
+
+
+
+    if (typeof session === 'undefined') {
+        res.type('text/html');
+        res.render('index', {
+        }, function (err, html) {
+            if (err) throw err;
+            res.send(html);
+        });
+    }
+    else {
+        res.type('text/html');
+        res.render('miscasos', {
+            nombre_usuario: session,
+        }, function (err, html) {
+            if (err) throw err;
+            res.send(html);
+        });
+    }
+
+});
+api.get('/otroscasos', function (req, res) {
+    let session = req.session.nombre_usuario;
+
+
+
+    if (typeof session === 'undefined') {
+        res.type('text/html');
+        res.render('index', {
+        }, function (err, html) {
+            if (err) throw err;
+            res.send(html);
+        });
+    }
+    else {
+        res.type('text/html');
+        res.render('otroscasos', {
+            nombre_usuario: session,
+        }, function (err, html) {
+            if (err) throw err;
+            res.send(html);
+        });
+    }
+
+});
+
 api.get('/salir', (req, res) => {
     req.session.destroy();
 
