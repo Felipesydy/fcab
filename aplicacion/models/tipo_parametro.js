@@ -7,4 +7,4 @@ const datos = Schema({
   codigo: String
   });
 
-module.exports = mongoose.model('tipo_parametro', datos);
+module.exports = mongoose.model('tipo_parametros', datos);

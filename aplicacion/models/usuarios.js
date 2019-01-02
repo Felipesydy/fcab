@@ -10,4 +10,4 @@ const TaskSchema = Schema({
   tipo: String
 });
 
-module.exports = mongoose.model('usuario', TaskSchema);
+module.exports = mongoose.model('usuarios', TaskSchema);

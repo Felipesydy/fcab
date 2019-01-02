@@ -8,4 +8,4 @@ const datos = Schema({
   descripcion: String
 });
 
-module.exports = mongoose.model('parametro', datos);
+module.exports = mongoose.model('parametros', datos);
