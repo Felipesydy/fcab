@@ -42,6 +42,16 @@ api.post('/obtener_por_id_parametros', parametros.obtener_por_id_parametros);
 api.post('/actualizar_parametros', parametros.actualizar_parametros);
 api.post('/eliminar_parametros/:id', parametros.eliminar_parametros);
 
+var tipoparametro = require('../controllers/controller_tipoparametro');
+ 
+
+api.post('/listar_tipoparametro', tipoparametro.listar_tipoparametro);
+api.post('/insertar_tipoparametro', tipoparametro.insertar_tipoparametro);
+api.post('/obtener_por_id_tipoparametro', tipoparametro.obtener_por_id_tipoparametro);
+api.post('/actualizar_tipoparametro', tipoparametro.actualizar_tipoparametro);
+api.post('/eliminar_tipoparametro/:id', tipoparametro.eliminar_tipoparametro);
+api.post('/obtener_todo_tipoparametro', tipoparametro.obtener_todo_tipoparametro);
+
 
 
 // Vistas
@@ -111,6 +121,31 @@ api.get('/parametros', function (req, res) {
     else {
         res.type('text/html');
         res.render('parametros', {
+            nombre_usuario: session,
+        }, function (err, html) {
+            if (err) throw err;
+            res.send(html);
+        });
+    }
+
+});
+
+api.get('/tipoparametro', function (req, res) {
+    let session = req.session.nombre_usuario;
+
+
+
+    if (typeof session === 'undefined') {
+        res.type('text/html');
+        res.render('index', {
+        }, function (err, html) {
+            if (err) throw err;
+            res.send(html);
+        });
+    }
+    else {
+        res.type('text/html');
+        res.render('tipoparametro', {
             nombre_usuario: session,
         }, function (err, html) {
             if (err) throw err;

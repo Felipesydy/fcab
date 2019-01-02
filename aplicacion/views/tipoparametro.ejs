@@ -20,28 +20,28 @@
   </header><!-- /.site-header -->
 
   <div class="site-content">
-    <h2>Maestro de Parámetros</h2>
+    <h2>Maestro de tipo Parámetro</h2>
 
 
 
 
-    <button type="button" class="btn btn-success" onclick="agregar()">Agregar Parametros</button>
+    <button type="button" class="btn btn-success" onclick="agregar()">Agregar tipo de parametro</button>
 
 
     <table id="table" class="table table-striped table-bordered">
       <thead>
         <tr>
-          <th>Tipo Parametro</th>
-          <th>Valor</th>
-          <th>Descripción</th>
-          <th>Acción</th>
+          <th>Nombre</th>
+          <th>Codigo</th>
+          <th>Acciones</th>
+
         </tr>
       </thead>
       <tbody>
       </tbody>
     </table>
     <!-- Modal -->
-    <div class="modal fade" id="modal_parametros" role="dialog">
+    <div class="modal fade" id="modal_tipoparametro" role="dialog">
       <div class="modal-dialog">
         <div class="modal-content">
           <!-- Modal Header -->
@@ -60,33 +60,19 @@
 
               <div class="form-group">
                 <input type="hidden" value="" name="id" /> <!-- Dato Oculto para manejar Id -->
-                <label for="inputName">Tipo Parámetro</label>
-                <select class="form-control" name="parametro" id="parametro">
 
-                 <!-- <option value="0">Seleccionar parámetros
-                  <option value="1">Días de trabajo</option>
-                  <option value="2">Jornada Efectiva Maxima</option>
-                  <option value="3">Jornada Maxima</option>
-                  <option value="4">Descanso entre viajes</option>
-                  <option value="5">Tiempo máximo de traslado Terrestre</option>
-                  <option value="6">Tiempo de cambio de ropa</option>
-                  <option value="7">Tiempo de Charla de seguridad</option>
-</option>-->
-                </select>
-                <span class="help-block"></span>
-            
               </div>
               <div class="form-group">
-                <label for="inputEmail">Valor</label>
-                <input type="text" class="form-control" id="valor" name="valor" placeholder="Ingresar valor" />
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresar nombre" />
                 <span class="help-block"></span>
               </div>
               <div class="form-group">
-                <label for="inputEmail">Descripción</label>
-                <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Ingresar Descripción" />
+                <label for="codigo">Codigo</label>
+                <input type="text" class="form-control" id="codigo" name="codigo" placeholder="Ingresar codigo" />
                 <span class="help-block"></span>
               </div>
-              
+
 
             </form>
           </div>
@@ -115,13 +101,58 @@
 
   <script>
 
+    addEvent(window, 'load', inicializarEventos, false);
+
+
+    function inicializarEventos() {
+      var nombre = document.getElementById('nombre');
+      addEvent(nombre, 'change', codigo_producto, false);
+    }
+    function codigo_producto() {
+      var nombre = document.getElementById('nombre').value;
+      nombre = nombre.trim();
+      let codigo_salida = nombre.charAt(0);
+
+      for (let i = 0; nombre.length > i; i++) {
+        if (nombre.charAt(i) == " ") {
+          codigo_salida += nombre.charAt(i + 1);
+        }
+      }
+      /*
+    var nuevocaracter = ''
+     nombre = nombre.split(' ').join(nuevocaracter);
+    */
+      $('[name="codigo"]').val("#" + codigo_salida)//.charAt(0));
+    }
+
+    function addEvent(elemento, nomevento, funcion, captura) {
+      if (elemento.attachEvent) {
+        elemento.attachEvent('on' + nomevento, funcion);
+        return true;
+      } else
+        if (elemento.addEventListener) {
+          elemento.addEventListener(nomevento, funcion, captura);
+          return true;
+        } else
+          return false;
+    }
+    function crearXMLHttpRequest() {
+      var xmlHttp = null;
+      if (window.ActiveXObject)
+        xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+      else
+        if (window.XMLHttpRequest)
+          xmlHttp = new XMLHttpRequest();
+      return xmlHttp;
+    }
+
     var table;
     var save_method;
     var url;
     $(document).ready(function () {
 
-    cargar_parametros();
-
+      //  cargar_sucursales(); // Carga de Sucursales
+      //  cargar_estado(); // Filtro Estado
       $(window).scroll(function () {
         return false;
       });
@@ -132,7 +163,7 @@
         "serverSide": true,
         "searching": false,
         "ajax": {
-          "url": "/listar_parametros",
+          "url": "/listar_tipoparametro",
           "type": "POST"
         },
         dom: 'Bfrtip',
@@ -205,8 +236,8 @@
       $('#form')[0].reset();
       $('.form-group').removeClass('has-error');
       $('.help-block').empty();
-      $('#modal_parametros').modal('show');
-      $('.modal-title').text('Añadir Parametros');
+      $('#modal_tipoparametro').modal('show');
+      $('.modal-title').text('Añadir tipo parametro');
 
     }
 
@@ -220,9 +251,9 @@
 
 
       if (save_method == 'add') {
-        url = "/insertar_parametros";
+        url = "/insertar_tipoparametro";
       } else {
-        url = "/actualizar_parametros";
+        url = "/actualizar_tipoparametro";
       }
 
 
@@ -234,7 +265,7 @@
         success: function (data) {
 
           if (data.status) {
-            $('#modal_parametros').modal('hide');
+            $('#modal_tipoparametro').modal('hide');
             reload_table();
           } else {
             for (var i = 0; i < data.inputerror.length; i++) {
@@ -266,19 +297,19 @@
       idOrderVtex = idOrderVtex.replace('/', '');
 
       $.ajax({
-        url: "/obtener_por_id_parametros",
+        url: "/obtener_por_id_tipoparametro",
         type: "POST",
         data: { "id": idOrderVtex },
         dataType: "JSON",
         success: function (data) {
 
           $('[name="id"]').val(idOrderVtex);
-          $('[name="parametro"]').val(data.parametro);
-          $('[name="valor"]').val(data.valor);
-          $('[name="descripcion"]').val(data.descripcion);
+          $('[name="nombre"]').val(data.nombre);
+          $('[name="codigo"]').val(data.codigo);
 
-          $('#modal_parametros').modal('show'); 
-          $('.modal-title').text('Editar Usuarios'); 
+
+          $('#modal_tipoparametro').modal('show');
+          $('.modal-title').text('Editar Usuarios');
 
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -294,7 +325,7 @@
       if (confirm('Se Encuentra seguro de Eliminar los Datos?')) {
 
         $.ajax({
-          url: "/eliminar_parametros/" + idOrderVtex,
+          url: "/eliminar_tipoparametro/" + idOrderVtex,
           type: "POST",
           dataType: "JSON",
           success: function (data) {
@@ -310,22 +341,6 @@
       }
     }
 
-    function cargar_parametros() {
-            $.ajax({
-                url: "/obtener_todo_tipoparametro",
-                type: "POST",
-                dataType: "JSON",
-                success: function (data) {
-                    $.each(data, function (key, registro) {
-                      // Le estoy pasando el nombre luego arreglar par el codigo
-                        $("#parametro").append('<option value=' + registro.codigo + '>' + registro.nombre + '</option>');
-                    });
-                },
-                error: function (data) {
-                    //    alert('error');
-                }
-            });
-        }
   </script>
 
 
@@ -335,4 +350,3 @@
       border: none;
     }
   </style>
-

@@ -22,89 +22,151 @@
       <div class="site-content">
         <h2>Maestro de Zonas</h2>
         <div class="simpleajaxuploader">
-                <div class="sauinner">
-                  <form id="uploader_form" action="" method="POST">
-                    <div id="filedrag">
-                      <i class="fa fa-cloud-upload fa-3x faupload"></i><br>
-                      
-Soltar archivos aquí
-                      <div id="previewarea" class="sauinner">
-                        <h3 align="center">Una vez seleccionado el archivo favor presionar subir </h3>
-                      </div>
-                    </div>
-                    <tr><p class="ex1"></p></tr>
-                    <button class="btn btn-primary btn-lg btn-block" type="submit" id="uploadnow">Subir</button>
-                  </form>
+          <div class="sauinner">
+            <form id="uploader_form" name='uploader_form' action="" method="get">
+              <div id="filedrag">
+                <i class="fa fa-cloud-upload fa-3x faupload"></i><br>
+                Soltar archivos aquí
+                <div id="previewarea" class="sauinner">
+                  <h3 align="center">Una vez seleccionado el archivo favor presionar subir </h3>
                 </div>
-
-      </div><!-- /.site-content -->
-
+              </div>
+              <tr>
+                <p class="ex1"></p>
+              </tr>
+              <button class="btn btn-success btn-lg btn-block" type="submit" id="uploadnow">Subir</button>
+              <tr>
+                <div class="btn btn-primary btn-lg btn-block">
+                  <input type="file" id="input-file-now" />
+                </div>
+              </tr>
+            </form>
+          </div>
+    
+        </div><!-- /.site-content -->
 
       <%- include('componentes/footer'); -%>
 
  
+          <!-- Script de Funcionalidades -->
 
-<!-- Script de Funcionalidades -->
+    <script>
+      var filedrag = document.getElementById('filedrag');
+      var previewarea = document.getElementById('previewarea');
 
-<script>
-var filedrag = document.getElementById('filedrag');
-var previewarea = document.getElementById('previewarea');
+      filedrag.addEventListener("dragover", FileIsOverElement, false); // Arrastrar
+      filedrag.addEventListener("dragleave", FileIsOverElement, false); // Dejar
+      filedrag.addEventListener("drop", FilesHaveBeenDropped, false); // Soltar
 
-filedrag.addEventListener("dragover", FileIsOverElement, false);
-filedrag.addEventListener("dragleave", FileIsOverElement, false);
-filedrag.addEventListener("drop", FilesHaveBeenDropped, false);
+      function FileIsOverElement(e) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+      function alerta() {
+        var mensaje;
+        var opcion = confirm("Esta seguro de subir el archivo");
+        if (opcion == true) {
+          mensaje = "Has clickado OK";
+          return true;
+        } else {
+          mensaje = "Has clickado Cancelar";
+          return false
+        }
+      }
+      var thefiles = [];
+      function FilesHaveBeenDropped(e) { // evento cuando se suelta el archivo
+        e.stopPropagation();
+        e.preventDefault();
+        FileIsOverElement(e);
+        var dropped = e.target.files || e.dataTransfer.files;
+        if (dropped.length > 1) {
+          confirm("No puede subir varios archivos - Seleccione solo uno");
+        } else {
+          let nombre_archivo = dropped[0].name;
+          if (nombre_archivo.substr(-4) == '.csv') {
+            for (var i = 0; i < dropped.length; i++) {
+              thefiles.push(dropped[i]);
+              var newfilepreview = document.createElement('p');
+              newfilepreview.innerHTML = 'Nombre del archivo a subir ' + dropped[i].name;
+              previewarea.appendChild(newfilepreview);
+            }
+          } else {
+            confirm("No es una extension valida");
+          }
+        }
+      }
 
-function FileIsOverElement(e)
-{
-  e.stopPropagation();
-  e.preventDefault();
-}
+      var uploader_form = document.getElementById('uploader_form');
+      var uploadnow = document.getElementById('uploadnow');
+      uploader_form.onsubmit = function (event) { // Cuando se preciona subir
+        var archivo = document.getElementById('input-file-now');
 
-var thefiles = [];
-function FilesHaveBeenDropped(e)
-{
-  e.stopPropagation();
-  e.preventDefault();
-  FileIsOverElement(e);
-  var dropped = e.target.files || e.dataTransfer.files;
-  for (var i = 0; i<dropped.length; i++)
-  {
-    thefiles.push(dropped[i]);
-    var newfilepreview = document.createElement('p');
-    newfilepreview.innerHTML = 'Nombre del archivo a subir ' + dropped[i].name;
-    previewarea.appendChild(newfilepreview);
-  }
-}
 
-var uploader_form = document.getElementById('uploader_form');
-var uploadnow     = document.getElementById('uploadnow');
-uploader_form.onsubmit = function(event)
-{
-  event.preventDefault();
-  if(thefiles.length<=0) {alert('Drag a file'); return; }
-  if(thefiles.length>1) {alert('No se puede subir mas de 1 Archivo');return; }
-  uploadnow.innerHTML = 'Subiendo...';
-  var formData = new FormData();
-  for (var i = 0; i < thefiles.length; i++)
-  {
-    formData.append('myfiles[]', thefiles[i], thefiles[i].name);
-  }
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', '/subir_zonas', true);
-  xhr.onload = function () {
-    if (xhr.status === 200)
-    {
-      uploadnow.innerHTML = 'Subir';
-     previewarea.innerHTML = "<div class='alert alert-success'>Se ha cargado correctamente el Archivo</div>";
-    }
-    else
-      alert('A Ocurrido un error!');
-  };
-  xhr.send(formData);
-};
+        if (alerta() == true) {
+          if (archivo.files.length == 0) {
+         
+            event.preventDefault();
+            if (thefiles.length <= 0) {
+              alert('Arrastre un archivo');
+              return;
+            }
+            if (thefiles.length > 1) {
+              alert('No se puede subir mas de 1 Archivo'); return;
+            }
+            uploadnow.innerHTML = 'Subiendo...';
+            var formData = new FormData();
+            for (var i = 0; i < thefiles.length; i++) {
+              formData.append('myfiles[]', thefiles[i], thefiles[i].name);
+            }
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/subir_zonas', true);
+            xhr.onload = function () {
+              if (xhr.status === 200) {
+                uploadnow.innerHTML = 'Subir';
+                previewarea.innerHTML = "<div class='alert alert-success'>Se ha cargado correctamente el Archivo</div>";
+              }
+              else
+                alert('A Ocurrido un error!');
+            };
+            xhr.send(formData);
 
- 
-</script>
+          } else {
+            if (thefiles.length <= 0) {           
+            }else{
+              alert("Se subira el archivo desde el seleccionar - El Archivo arrastrado se perdera!");
+            }
+            
+            event.preventDefault();
+            uploadnow.innerHTML = 'Subiendo...';
+            var formData = new FormData();
+            formData.append('myfiles[]', archivo.files[0], archivo.files[0].name);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/subir_zonas', true);
+            xhr.onload = function () {
+              if (xhr.status === 200) {
+                uploadnow.innerHTML = 'Subir';
+                previewarea.innerHTML = "<div class='alert alert-success'>Se ha cargado correctamente el Archivo</div>";
+              
+              }
+              else
+                alert('A Ocurrido un error!');
+            };
+            xhr.send(formData);
+          }
+
+
+        } else {
+
+        }
+
+      };
+
+
+
+
+    </script>
+
+
 
 
 
