@@ -10,6 +10,7 @@
     "cls": "latest",
     "continuation-local-storage": "latest",
     "csvjson": "^5.1.0",
+    "detect-csv": "^1.1.0",
     "diff": "latest",
     "ejs": "latest",
     "express": "latest",

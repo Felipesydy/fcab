@@ -139,7 +139,7 @@ const csv_to_json = ((data) => {
                     console.log(body.payload);
                     resolve({ 'status': true, 'payload': body.payload });
                 } else {
-                    resolve({ 'status': false, 'payload': "Sin Data" });
+                    resolve({ 'status': false, 'payload': "CSV debe ser parseado en tabuliación" });
                 }
 
             });
