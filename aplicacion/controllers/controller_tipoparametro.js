@@ -1,8 +1,8 @@
- 
-const tipoparametro = require('../models/tipo_parametro');
- 
 
- //################################ Mantenedores <tipoparametro> #####################################
+const tipoparametro = require('../models/tipo_parametro');
+
+
+//################################ Mantenedores <tipoparametro> #####################################
 
 const listar_tipoparametro = (async (req, res) => {
   console.log("Next: " + req.body.start);
@@ -27,16 +27,22 @@ const listar_tipoparametro = (async (req, res) => {
     res.json(datos_tabla);
   }
 });
- 
+
 const insertar_tipoparametro = (async (req, res) => {
   console.log("########## Insertar tipoparametro #################");
+  let data_insertar = {
+    "nombre": req.body.nombre,
+    "codigo": req.body.codigo,
+    "status": true
+  }
+
   let data, mensaje;
   await validar(req.body).then(function (result) {
     data = (result);
   });
 
   if (data.status) {
-    const user = new tipoparametro(req.body);
+    const user = new tipoparametro(data_insertar);
     let salida = await user.save();
     mensaje = {
       status: true,
@@ -64,7 +70,7 @@ const actualizar_tipoparametro = (async (req, res) => {
   if (data.status) {
     let data_actualizar = {
       "nombre": req.body.nombre,
-      "codigo": req.body.codigo    
+      "codigo": req.body.codigo
     }
     let salida = await tipoparametro.update({ _id: req.body.id }, data_actualizar);
     console.log(salida);
@@ -89,9 +95,9 @@ const eliminar_tipoparametro = (async (req, res) => {
 
 });
 
-const obtener_todo_tipoparametro = (async (req, res) => { 
+const obtener_todo_tipoparametro = (async (req, res) => {
   console.log("======= Obtener por todo Tipo Parametros ===========");
-  const listar = await tipoparametro.find();
+  const listar = await tipoparametro.find({ 'status': true}); // solo los tipos de parametros activo
 
   console.log(listar);
   res.json(listar);
@@ -103,7 +109,7 @@ function validar(body) {
     return new Promise(resolve => {
       let data;
       data = { error_string: [], inputerror: [], status: true };
- 
+
       if (body.nombre == '') {
         data.inputerror.push((('nombre')));
         data.error_string.push((('Debes indicar un nombre')));
@@ -114,8 +120,8 @@ function validar(body) {
         data.error_string.push((('Debes indicar una codigo')));
         data.status = false;
       }
-     
-     
+
+
       if (data.status === false) {
         console.log(data);
         resolve(data);

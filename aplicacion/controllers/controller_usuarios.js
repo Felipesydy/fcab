@@ -81,7 +81,7 @@ const listar_usuarios = (async (req, res) => {
 
   }
 
- });
+});
 
 
 const validar_session = ((req, res) => {
@@ -174,10 +174,13 @@ const eliminar_usuarios = (async (req, res) => {
 
 });
 
+
+
 function validar(body) {
+  const User = require('../models/usuarios');
   console.log("Entro al validar");
   try {
-    return new Promise(resolve => {
+    return new Promise(async resolve => {
       let data;
       data = { error_string: [], inputerror: [], status: true };
 
@@ -215,6 +218,24 @@ function validar(body) {
       if (body.tipo == '0') {
         data.inputerror.push((('tipo')));
         data.error_string.push((('Debes seleccionar un tipo de usuario')));
+        data.status = false;
+      }
+
+      
+      const user = await User.find({ 'usuario': body.usuario });
+  
+      if(user.length!=0){
+        data.inputerror.push((('usuario')));
+        data.error_string.push((('Ya se encuentra registrado el usuario')));
+        data.status = false;
+      }
+
+
+      const mail = await User.find({ 'email': body.email });
+  
+      if(mail.length!=0){
+        data.inputerror.push((('email')));
+        data.error_string.push((('Correo electronico en uso! - Intente con otro')));
         data.status = false;
       }
 

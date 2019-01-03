@@ -89,6 +89,18 @@ const insertar_parametros = (async (req, res) => {
   if (data.status) {
     const user = new parametros(req.body);
     let salida = await user.save();
+
+
+    const tipoparametro = require('../models/tipo_parametro');
+    let act = {
+      "status": false
+    }
+    console.log(req.body);
+    console.log("Actualizar: " + req.body.parametro);
+
+    await tipoparametro.updateOne({ codigo: req.body.parametro }, act);
+
+
     mensaje = {
       status: true,
     }
@@ -103,8 +115,21 @@ const obtener_por_id_parametros = (async (req, res) => { // Devolver al formular
   const listar = await parametros.find();
   contador = listar.length
   const user = await parametros.find({ '_id': req.body.id });
-  console.log(user);
-  res.json(user[0]);
+  console.log(user[0].parametro);
+
+  const tipoparametro = require('../models/tipo_parametro');
+  const tipo = await tipoparametro.find({ 'codigo': user[0].parametro });
+  console.log(tipo[0].nombre);
+
+  let salida_data = {
+    _id: user[0]._id,
+    valor: user[0].valor,
+    descripcion: user[0].descripcion,
+    parametro: user[0].parametro,
+    nombre_parametro: tipo[0].nombre
+  }
+
+  res.json(salida_data);
 });
 const actualizar_parametros = (async (req, res) => {
   let data, mensaje;
@@ -121,6 +146,33 @@ const actualizar_parametros = (async (req, res) => {
     }
     let salida = await parametros.update({ _id: req.body.id }, data_actualizar);
     console.log(salida);
+
+    /*
+        const user = await parametros.find({ '_id': req.body.id });
+        console.log(user);
+        res.json(user[0]);
+    
+        if (user[0].parametro != req.body.parametros) {
+          const tipoparametro = require('../models/tipo_parametro');
+          let act = {
+            "status": true
+          }
+          console.log(req.body);
+          console.log("Actualizar: " + req.body.parametros);
+          await tipoparametro.updateOne({ codigo: req.body.parametros }, { "status": false });
+          await tipoparametro.updateOne({ codigo: user[0].parametro }, act);
+    
+    
+        }
+    
+    */
+
+
+
+
+
+
+
     mensaje = {
       status: true,
     }
@@ -133,11 +185,25 @@ const actualizar_parametros = (async (req, res) => {
 const eliminar_parametros = (async (req, res) => {
   let { id } = req.params;
   console.log(req.params);
+
+
+  // Busca datos
+  const param = await parametros.find({ '_id': id });
+  console.log(param[0]);
+
+  // Actualiza
+  const tipoparametro = require('../models/tipo_parametro');
+  await tipoparametro.updateOne({ codigo: param[0].parametro }, { "status": true });
+  // Elimina
   let salida = await parametros.remove({ _id: id });
   console.log(salida);
   mensaje = {
     status: true,
   }
+
+
+
+
   res.json(mensaje);
 
 });
