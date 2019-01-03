@@ -121,14 +121,18 @@
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/subir_itinerario', true);
             xhr.onload = function () {
-              if (xhr.status === 200) {
+              let respuesta=JSON.parse(xhr.responseText);
+              if (respuesta.uploaded) {
                 uploadnow.innerHTML = 'Subir';
                 previewarea.innerHTML = "<div class='alert alert-success'>Se ha cargado correctamente el Archivo</div>";
+              } else{
+             
+                uploadnow.innerHTML = 'Subir';
+                previewarea.innerHTML = "<div class='alert alert-danger'>No se cargado el Archivo: "+respuesta.message+"</div>";
+            
               }
-              else
-                alert('A Ocurrido un error!');
-            };
-            xhr.send(formData);
+            }
+        
 
           } else {
             if (thefiles.length <= 0) {           
@@ -143,13 +147,17 @@
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/subir_itinerario', true);
             xhr.onload = function () {
-              if (xhr.status === 200) {
+              let respuesta=JSON.parse(xhr.responseText);
+              if (respuesta.uploaded) {
                 uploadnow.innerHTML = 'Subir';
                 previewarea.innerHTML = "<div class='alert alert-success'>Se ha cargado correctamente el Archivo</div>";
               
+              }else{
+                uploadnow.innerHTML = 'Subir';
+                previewarea.innerHTML = "<div class='alert alert-danger'>No se cargado el Archivo: "+respuesta.message+"</div>";
+            
               }
-              else
-                alert('A Ocurrido un error!');
+             
             };
             xhr.send(formData);
           }

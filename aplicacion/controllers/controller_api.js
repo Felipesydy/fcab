@@ -68,19 +68,20 @@ const subir_itinerario = (async (req, res) => {
             await csv_to_json(json_ruta).then(function (result) {
                 salida = (result);
             });
-            console.log(salida.payload);
-            let salida2;
-            await insert_itinerarios(salida.payload).then(function (result) {
-                salida2 = (result);
-            });
+            console.log("=========== Mensaje convertir a JSon===========");
+            if (salida.status) {
+                console.log("Conversion correcta");
+                console.log(salida.payload);
+                let salida2;
+                await insert_itinerarios(salida.payload).then(function (result) {
+                    salida2 = (result);
+                });
+                res.json({ uploaded: true, message: "Estructura CSV Correcta" })
+            } else {
+                console.log("Fallo la transformacion del archivo");
+            }
 
-
-
-
-
-
-
-            res.status(200).json({ uploaded: true })
+            res.json({ uploaded: false, message: "Estructura CSV Incorrecta" })
         }
     })
 
@@ -90,7 +91,7 @@ const subir_itinerario = (async (req, res) => {
 
 const insert_itinerarios = ((data) => {
     console.log("=================================FELIPE ===============================");
-console.log(data);
+    console.log(data);
     try {
         return new Promise(resolve => {
             request({
@@ -149,9 +150,9 @@ const csv_to_json = ((data) => {
     }
 })
 
-/*=================ITINERARIOS==============*/ 
+/*=================ITINERARIOS==============*/
 
-/*=================TIEMPODISTANCIA==============*/ 
+/*=================TIEMPODISTANCIA==============*/
 const subir_tiempodistancia = (async (req, res) => {
 
     console.log("SUBIR ARCHIVO");
@@ -220,7 +221,7 @@ const subir_tiempodistancia = (async (req, res) => {
 
 const insert_tiempodistancia = ((data) => {
     console.log("=================================FELIPE ===============================");
-console.log(data);
+    console.log(data);
     try {
         return new Promise(resolve => {
             request({
@@ -247,9 +248,9 @@ console.log(data);
         throw new Error('Error Obtener Reporte ' + err);
     }
 })
-/*=================TIEMPODISTANCIA==============*/ 
+/*=================TIEMPODISTANCIA==============*/
 
-/*======================ZONAS===================*/ 
+/*======================ZONAS===================*/
 const subir_zonas = (async (req, res) => {
 
     console.log("SUBIR ARCHIVO");
@@ -318,7 +319,7 @@ const subir_zonas = (async (req, res) => {
 
 const insert_zonas = ((data) => {
     console.log("=================================FELIPE ===============================");
-console.log(data);
+    console.log(data);
     try {
         return new Promise(resolve => {
             request({
@@ -345,7 +346,7 @@ console.log(data);
         throw new Error('Error Obtener Reporte ' + err);
     }
 })
-/*======================ZONAS===================*/ 
+/*======================ZONAS===================*/
 
 
 
