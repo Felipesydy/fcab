@@ -27,6 +27,7 @@
     "pkginfo": "latest",
     "request": "latest",
     "save": "^2.3.3",
+    "nodemailer": "^5.0.0",
     "underscore": "latest",
     "winston": "latest"
   },

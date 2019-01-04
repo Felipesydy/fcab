@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,267 +14,347 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 
-  </head>
+</head>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
+<!-- Añadido Jorge -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <div class="main">
-    
-    
+
+
     <div class="container">
-<center>
-    
-<div class="middle">
-  
-      <div id="login">
-          <strong> <div id="error"> </div></strong>
-        <form action="javascript:void(0);" method="get" id="formulario">
+        <center>
 
-          <fieldset class="clearfix">
+            <div class="middle">
 
-            <p ><span class="fa fa-user"></span><input type="text" name="usuario" Placeholder="Usuario" required></p> <!-- JS because of IE support; better: placeholder="Username" -->
-            <p><span class="fa fa-lock"></span><input type="password" name="clave" Placeholder="Clave" required></p> <!-- JS because of IE support; better: placeholder="Password" -->
-            
-             <div>
-                                <span style="width:48%; text-align:left;  display: inline-block;"><a class="small-text" onclick="alerta()">Olvidó la Contraseña?</a></span>
-                                <span style="width:50%; text-align:right;  display: inline-block;"><input type="submit" value="Entrar" onclick="conectar()"></span>
-                 
+                <div id="login">
+                    <strong>
+                        <div id="error"> </div>
+                    </strong>
+                    <form action="javascript:void(0);" method="get" id="formulario">
+
+                        <fieldset class="clearfix">
+
+                            <p><span class="fa fa-user"></span><input type="text" name="usuario" Placeholder="Usuario"
+                                    required></p> <!-- JS because of IE support; better: placeholder="Username" -->
+                            <p><span class="fa fa-lock"></span><input type="password" name="clave" Placeholder="Clave"
+                                    required></p> <!-- JS because of IE support; better: placeholder="Password" -->
+
+                            <div>
+                                <span style="width:48%; text-align:left;  display: inline-block;"><a class="small-text"
+                                        onclick="alerta()">Olvidó la Contraseña?</a></span>
+                                <span style="width:50%; text-align:right;  display: inline-block;"><input type="submit"
+                                        value="Entrar" onclick="conectar()"></span>
+
                             </div>
 
-          </fieldset>
-<div class="clearfix"></div>
-        </form>
+                        </fieldset>
+                        <div class="clearfix"></div>
+                    </form>
 
-        <div class="clearfix"></div>
+                    <div class="clearfix"></div>
 
-      </div> <!-- end login -->
-      <div class="logo">
-          <img class="mb-5" src="./images/logo.png" alt="">
-          <div class="clearfix"></div>
-      </div>
-      
-      </div>
-</center>
+                </div> <!-- end login -->
+                <div class="logo">
+                    <img class="mb-5" src="./images/logo.png" alt="">
+                    <div class="clearfix"></div>
+                </div>
+
+            </div>
+        </center>
     </div>
 
 </div>
 
+<div class="modal fade" id="modal_usuarios" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+
+                <h4 class="modal-title" id="myModalLabel">Contact Form</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <p class="statusMsg"></p>
+                <form role="form" id="form">
+
+
+                    <div class="form-group">
+                        <label for="inputEmail">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Ingresar Email del restablecer" />
+                        <span class="help-block"></span>
+                    </div>
+
+
+                </form>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" id="btnSave" onclick="enviar()" class="btn btn-primary">Enviar Contraseña</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <style>
-
-@charset "utf-8";
-
-
-@import url//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css);
+    @charset "utf-8";
 
 
+    @import url //maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css);
 
-div.main{
-    background: #0264d6; /* Old browsers */
-background: -moz-radial-gradient(center, ellipse cover,  #0264d6 1%, #1c2b5a 100%); /* FF3.6+ */
-background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(1%,#0264d6), color-stop(100%,#1c2b5a)); /* Chrome,Safari4+ */
-background: -webkit-radial-gradient(center, ellipse cover,  #0264d6 1%,#1c2b5a 100%); /* Chrome10+,Safari5.1+ */
-background: -o-radial-gradient(center, ellipse cover,  #0264d6 1%,#1c2b5a 100%); /* Opera 12+ */
-background: -ms-radial-gradient(center, ellipse cover,  #0264d6 1%,#1c2b5a 100%); /* IE10+ */
-background: radial-gradient(ellipse at center,  #0264d6 1%,#1c2b5a 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0264d6', endColorstr='#1c2b5a',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-height:calc(100vh);
-width:100%;
-}
 
-[class*="fontawesome-"]:before {
-  font-family: 'FontAwesome', sans-serif;
-}
 
-/* ---------- GENERAL ---------- */
+    div.main {
+        background: #0264d6;
+        /* Old browsers */
+        background: -moz-radial-gradient(center, ellipse cover, #0264d6 1%, #1c2b5a 100%);
+        /* FF3.6+ */
+        background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(1%, #0264d6), color-stop(100%, #1c2b5a));
+        /* Chrome,Safari4+ */
+        background: -webkit-radial-gradient(center, ellipse cover, #0264d6 1%, #1c2b5a 100%);
+        /* Chrome10+,Safari5.1+ */
+        background: -o-radial-gradient(center, ellipse cover, #0264d6 1%, #1c2b5a 100%);
+        /* Opera 12+ */
+        background: -ms-radial-gradient(center, ellipse cover, #0264d6 1%, #1c2b5a 100%);
+        /* IE10+ */
+        background: radial-gradient(ellipse at center, #0264d6 1%, #1c2b5a 100%);
+        /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0264d6', endColorstr='#1c2b5a', GradientType=1);
+        /* IE6-9 fallback on horizontal gradient */
+        height: calc(100vh);
+        width: 100%;
+    }
 
-* {
-  box-sizing: border-box;
-    margin:0px auto;
+    [class*="fontawesome-"]:before {
+        font-family: 'FontAwesome', sans-serif;
+    }
 
-  &:before,
-  &:after {
-    box-sizing: border-box;
-  }
+    /* ---------- GENERAL ---------- */
 
-}
+    * {
+        box-sizing: border-box;
+        margin: 0px auto;
 
-body {
-   
-    color: #606468;
-  font: 87.5%/1.5em 'Open Sans', sans-serif;
-  margin: 0;
-}
+        &:before,
+        &:after {
+            box-sizing: border-box;
+        }
 
-a {
-	color: #eee;
-	text-decoration: none;
-}
+    }
 
-a:hover {
-	text-decoration: underline;
-}
+    body {
 
-input {
-	border: none;
-	font-family: 'Open Sans', Arial, sans-serif;
-	font-size: 14px;
-	line-height: 1.5em;
-	padding: 0;
-	-webkit-appearance: none;
-}
+        color: #606468;
+        font: 87.5%/1.5em 'Open Sans', sans-serif;
+        margin: 0;
+    }
 
-p {
-	line-height: 1.5em;
-}
+    a {
+        color: #eee;
+        text-decoration: none;
+    }
 
-.clearfix {
-  *zoom: 1;
+    a:hover {
+        text-decoration: underline;
+    }
 
-  &:before,
-  &:after {
-    content: ' ';
-    display: table;
-  }
+    input {
+        border: none;
+        font-family: 'Open Sans', Arial, sans-serif;
+        font-size: 14px;
+        line-height: 1.5em;
+        padding: 0;
+        -webkit-appearance: none;
+    }
 
-  &:after {
-    clear: both;
-  }
+    p {
+        line-height: 1.5em;
+    }
 
-}
+    .clearfix {
+        *zoom: 1;
 
-.container {
-  left: 50%;
-  position: fixed;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
+        &:before,
+        &:after {
+            content: ' ';
+            display: table;
+        }
 
-/* ---------- LOGIN ---------- */
+        &:after {
+            clear: both;
+        }
 
-#login form{
-	width: 250px;
-}
-#login, .logo{
-    display:inline-block;
-    width:40%;
-}
-#login{
-border-right:1px solid #fff;
-  padding: 0px 22px;
-  width: 59%;
-}
-.logo{
-color:#fff;
-font-size:50px;
-  line-height: 125px;
-}
+    }
 
-#login form span.fa {
-	background-color: #fff;
-	border-radius: 3px 0px 0px 3px;
-	color: #000;
-	display: block;
-	float: left;
-	height: 50px;
-    font-size:24px;
-	line-height: 50px;
-	text-align: center;
-	width: 50px;
-}
+    .container {
+        left: 50%;
+        position: fixed;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
 
-#login form input {
-	height: 50px;
-}
-fieldset{
-    padding:0;
-    border:0;
-    margin: 0;
+    /* ---------- LOGIN ---------- */
 
-}
-#login form input[type="text"], input[type="password"] {
-	background-color: #fff;
-	border-radius: 0px 3px 3px 0px;
-	color: #000;
-	margin-bottom: 1em;
-	padding: 0 16px;
-	width: 200px;
-}
+    #login form {
+        width: 250px;
+    }
 
-#login form input[type="submit"] {
-  border-radius: 3px;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  background-color: #000000;
-  color: #eee;
-  font-weight: bold;
-  /* margin-bottom: 2em; */
-  text-transform: uppercase;
-  padding: 5px 10px;
-  height: 30px;
-}
+    #login,
+    .logo {
+        display: inline-block;
+        width: 40%;
+    }
 
-#login form input[type="submit"]:hover {
-	background-color: #d44179;
-}
+    #login {
+        border-right: 1px solid #fff;
+        padding: 0px 22px;
+        width: 59%;
+    }
 
-#login > p {
-	text-align: center;
-}
+    .logo {
+        color: #fff;
+        font-size: 50px;
+        line-height: 125px;
+    }
 
-#login > p span {
-	padding-left: 5px;
-}
-.middle {
-  display: flex;
-  width: 600px;
-}
+    #login form span.fa {
+        background-color: #fff;
+        border-radius: 3px 0px 0px 3px;
+        color: #000;
+        display: block;
+        float: left;
+        height: 50px;
+        font-size: 24px;
+        line-height: 50px;
+        text-align: center;
+        width: 50px;
+    }
 
+    #login form input {
+        height: 50px;
+    }
+
+    fieldset {
+        padding: 0;
+        border: 0;
+        margin: 0;
+
+    }
+
+    #login form input[type="text"],
+    input[type="password"] {
+        background-color: #fff;
+        border-radius: 0px 3px 3px 0px;
+        color: #000;
+        margin-bottom: 1em;
+        padding: 0 16px;
+        width: 200px;
+    }
+
+    #login form input[type="submit"] {
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        background-color: #000000;
+        color: #eee;
+        font-weight: bold;
+        /* margin-bottom: 2em; */
+        text-transform: uppercase;
+        padding: 5px 10px;
+        height: 30px;
+    }
+
+    #login form input[type="submit"]:hover {
+        background-color: #d44179;
+    }
+
+    #login>p {
+        text-align: center;
+    }
+
+    #login>p span {
+        padding-left: 5px;
+    }
+
+    .middle {
+        display: flex;
+        width: 600px;
+    }
 </style>
 
- 
-	
-  </body>
+
+
+</body>
+
 </html>
 
 <script>
-        function alerta() {
-            var mensaje;
-            var opcion = confirm("Favor contacte a su administrador de sistema");
-            if (opcion == true) {
-                mensaje = "Has clickado OK";
-                return true;
-            } else {
-                mensaje = "Has clickado Cancelar";
-                return false
-            }        
-        }
-  function conectar() {
-                            $.ajax({
-                                url: "/login",
-                                data: $('#formulario').serialize(),
-                                type: "POST",
-                                dataType: "JSON",
-                                success: function(data) {
-                                    if (data.status) {
-                                        //alert(data.token);
-                                        //	window.location.replace("principal?id="+data.id_usuario); //principal?=1
-                                        window.location.replace("/usuarios"); //principal?=1
-                                    } else {
-                                        //	alert(data.message);
-                                        document.getElementById('error').innerHTML = "<h5 style='color:white;'>"+data.message+"</h5>"
-                                        confirm(data.message);
-                                        $('#alerta').toggle();
-                                    }
-                                },
-                                error: function(data) {
-                                    alert('error');
-                                    document.getElementById('error').innerHTML = "Error"
-                                    $('#alerta').toggle();
-                                }
-                            });
-                        }
-                   
+    function alerta() {
+        $('#form')[0].reset();
+        $('.form-group').removeClass('has-error');
+        $('.help-block').empty();
+        $('#modal_usuarios').modal('show');
+        $('.modal-title').text('Olvidó su contraseña');
+    }
+    function conectar() {
+        $.ajax({
+            url: "/login",
+            data: $('#formulario').serialize(),
+            type: "POST",
+            dataType: "JSON",
+            success: function (data) {
+                if (data.status) {
+                    //alert(data.token);
+                    //	window.location.replace("principal?id="+data.id_usuario); //principal?=1
+                    window.location.replace("/usuarios"); //principal?=1
+                } else {
+                    //	alert(data.message);
+                    document.getElementById('error').innerHTML = "<h5 style='color:white;'>" + data.message + "</h5>"
+                    confirm(data.message);
+                    $('#alerta').toggle();
+                }
+            },
+            error: function (data) {
+                alert('error');
+                document.getElementById('error').innerHTML = "Error"
+                $('#alerta').toggle();
+            }
+        });
+    }
+
+    function enviar() {
+        $.ajax({
+            url: "/enviar_pass",
+            data: $('#form').serialize(),
+            type: "POST",
+            dataType: "JSON",
+            success: function (data) {
+                if (data.status) {
+                    alert(data.message);
+                    location.reload();
+                } else {
+                    alert(data.message);
+                    location.reload();
+                }
+            },
+            error: function (data) {
+                alert('error');
+                document.getElementById('error').innerHTML = "Error"
+                $('#alerta').toggle();
+            }
+        });
+    }
+
 </script>

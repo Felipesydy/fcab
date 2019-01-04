@@ -221,10 +221,10 @@ function validar(body) {
         data.status = false;
       }
 
-      
+
       const user = await User.find({ 'usuario': body.usuario });
-  
-      if(user.length!=0){
+
+      if (user.length != 0) {
         data.inputerror.push((('usuario')));
         data.error_string.push((('Ya se encuentra registrado el usuario')));
         data.status = false;
@@ -232,8 +232,8 @@ function validar(body) {
 
 
       const mail = await User.find({ 'email': body.email });
-  
-      if(mail.length!=0){
+
+      if (mail.length != 0) {
         data.inputerror.push((('email')));
         data.error_string.push((('Correo electronico en uso! - Intente con otro')));
         data.status = false;
@@ -254,7 +254,69 @@ function validar(body) {
 }
 
 
+const enviar_pass = (async(req, res) => {
 
+  if (!req.body.email) {
+    res.status(400).send({ "error": "Error en los parámetros de entrada" });
+  }
+
+  var email = req.body.email;
+
+  console.log("Entro a cambio de contraseña");
+  console.log("Validando Correo: " + email);
+
+  const User = require('../models/usuarios');
+  const user = await User.find({ 'email': email });
+  
+  if(user.length != 0){
+    var nodemailer = require('nodemailer');
+    // Definimos el transporter
+    var transporter = nodemailer.createTransport({
+      service: 'Gmail',
+      auth: {
+        user: 'fcabchile@gmail.com',
+        pass: 'fcab1234'
+      }
+    });
+    // Definimos el email
+    var mailOptions = {
+      from: 'Remitente',
+      to: email,
+      subject: 'Restablecer Contraseña Sistema FCAB Usuario:'+user[0].usuario,
+      text: 'Su contraseña es: ' + user[0].clave
+    };
+    // Enviamos el email
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+        res.send(500, err.message);
+      } else {
+        console.log("Email sent");
+        res.status(200).jsonp(req.body);
+      }
+    });
+
+    // Aqui envio el correo
+
+    res.json({
+      status: true,
+      message: "El Correo Electronico Enviado"
+    });
+
+  }else{
+    res.json({
+      status: false,
+      message: "Email no encontrado"
+    });
+
+  }
+
+
+  
+
+
+
+});
 
 
 
@@ -266,6 +328,7 @@ module.exports = {
   listar_usuarios,
   obtener_por_id_usuarios,
   actualizar_usuarios,
-  eliminar_usuarios
+  eliminar_usuarios,
+  enviar_pass
 
 }

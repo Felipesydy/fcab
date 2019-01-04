@@ -1,54 +1,56 @@
 <%- include('componentes/header'); -%>
-<main class="site-main">
-  <header class="site-header">
+
+    <main class="site-main">
+      <header class="site-header">
 
 
-    <div class="breadcrumb">
-      <ol class="breadcrumb-tree">
-        <li class="breadcrumb-item">
-          <a href="#">
-            <span class="zmdi zmdi-home mr-1"></span>
-            <span>Home</span>
-          </a>
-        </li>
-        <li class="breadcrumb-item active"><a href="#">Itinerarios</a></li>
-      </ol>
+        <div class="breadcrumb">
+          <ol class="breadcrumb-tree">
+            <li class="breadcrumb-item">
+              <a href="#">
+                <span class="zmdi zmdi-home mr-1"></span>
+                <span>Home</span>
+              </a>
+            </li>
+            <li class="breadcrumb-item active"><a href="#">Itinerarios</a></li>
+          </ol>
 
 
-    </div><!-- /.breadcrumb -->
-  </header><!-- /.site-header -->
+        </div><!-- /.breadcrumb -->
+      </header><!-- /.site-header -->
 
-  <div class="site-content">
-    <h2>Maestro de Itinerarios</h2>
-    <div class="simpleajaxuploader">
-      <div class="sauinner">
-        <form id="uploader_form" name='uploader_form' action="" method="get">
-          <div id="filedrag">
-            <i class="fa fa-cloud-upload fa-3x faupload"></i><br>
-            Soltar archivos aquí
-            <div id="previewarea" class="sauinner">
-              <h3 align="center">Una vez seleccionado el archivo favor presionar subir </h3>
-            </div>
+      <div class="site-content">
+        <h2>Maestro de Itinerarios</h2>
+        <div class="simpleajaxuploader">
+          <div class="sauinner">
+            <form id="uploader_form" name='uploader_form' action="" method="get">
+              <div id="filedrag">
+                <i class="fa fa-cloud-upload fa-3x faupload"></i><br>
+                Soltar archivos aquí
+                <div id="previewarea" class="sauinner">
+                  <h3 align="center">Una vez seleccionado el archivo favor presionar subir </h3>
+                </div>
+              </div>
+              <tr>
+                <p class="ex1"></p>
+              </tr>
+              <tr>
+                <div class="btn btn-primary btn-lg btn-block">
+                  <input type="file" accept=".csv" id="input-file-now" />
+                </div>
+              </tr>
+              
+              <button class="btn btn-success btn-lg btn-block" type="submit" id="uploadnow">Subir</button>
+              
+            </form>
           </div>
-          <tr>
-            <p class="ex1"></p>
-          </tr>
-          <tr>
-            <div class="btn btn-primary btn-lg btn-block">
-              <input type="file" accept=".csv" id="input-file-now" />
-            </div>
-          </tr>
+    
+        </div><!-- /.site-content -->
 
-          <button class="btn btn-success btn-lg btn-block" type="submit" id="uploadnow">Subir</button>
-          
-        </form>
-      </div>
+      <%- include('componentes/footer'); -%>
 
-    </div><!-- /.site-content -->
-
-    <%- include('componentes/footer'); -%>
-
-    <!-- Script de Funcionalidades -->
+ 
+          <!-- Script de Funcionalidades -->
 
     <script>
       var filedrag = document.getElementById('filedrag');
@@ -121,18 +123,14 @@
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/subir_itinerario', true);
             xhr.onload = function () {
-              let respuesta=JSON.parse(xhr.responseText);
-              if (respuesta.uploaded) {
+              if (xhr.status === 200) {
                 uploadnow.innerHTML = 'Subir';
                 previewarea.innerHTML = "<div class='alert alert-success'>Se ha cargado correctamente el Archivo</div>";
-              } else{
-             
-                uploadnow.innerHTML = 'Subir';
-                previewarea.innerHTML = "<div class='alert alert-danger'>No se cargado el Archivo: "+respuesta.message+"</div>";
-            
               }
-            }
-        
+              else
+                alert('A Ocurrido un error!');
+            };
+            xhr.send(formData);
 
           } else {
             if (thefiles.length <= 0) {           
@@ -157,7 +155,6 @@
                 previewarea.innerHTML = "<div class='alert alert-danger'>No se cargado el Archivo: "+respuesta.message+"</div>";
             
               }
-             
             };
             xhr.send(formData);
           }
@@ -176,104 +173,25 @@
 
 
 
-    <style>
-      @-ms-viewport {
-        width: device-width;
-      }
 
-      body {
-        background: white;
-        font-family: 'Lato', sans-serif;
-        font-size: 1em;
-        line-height: 1em;
-        letter-spacing: .05em;
-        margin: 0;
-      }
 
-      header {
-        background: #39527b;
-        padding: 20px 0;
-      }
+<style>
+@-ms-viewport{ width: device-width; }
+body { background: white; font-family: 'Lato', sans-serif; font-size: 1em; line-height: 1em; letter-spacing: .05em; margin: 0; }
+header { background: #39527b; padding: 20px 0; }
+.btw { background: white; padding:2px 20px; text-align: center; position:fixed; top:0px; line-height:3em; }
+.btwlink { color: white; text-decoration: none; font-size: 12px; }
+h1.heading { line-height: 1.1em;  text-align: center;  font-weight: 400;  font-size: 1.7em;  color: #EDF7F2; margin-top: 40px;}
+div.simpleajaxuploader {width: 900px;margin: 2% auto;max-width: 95%;min-height: 400px;border-radius: 5px;color: #FFF;font-size: 1.5em; }
+div.sauinner {width: 96%;  padding: 2%; }
+button.button { background: black; border: none; padding: 20px 50px; font-size: 1em; color: white; display: block; margin: 40px auto 0px auto; cursor: pointer; font: inherit; width: 100%;}
+div#filedrag { width: 100%; background: #39527b; padding: 40px 20px; text-align: center; border: 1px dotted #971414; box-sizing:border-box; }
+.previewarea { background: rgb(126, 64, 64); padding: 20px; box-sizing:border-box; width: 100%; margin-top: 30px; font-size: 12px; text-align: left; }
+.previewarea h3 { font-weight: normal; }
+p.ex1 {
+  padding-top: 25px;
+}
+</style>
 
-      .btw {
-        background: white;
-        padding: 2px 20px;
-        text-align: center;
-        position: fixed;
-        top: 0px;
-        line-height: 3em;
-      }
-
-      .btwlink {
-        color: white;
-        text-decoration: none;
-        font-size: 12px;
-      }
-
-      h1.heading {
-        line-height: 1.1em;
-        text-align: center;
-        font-weight: 400;
-        font-size: 1.7em;
-        color: #EDF7F2;
-        margin-top: 40px;
-      }
-
-      div.simpleajaxuploader {
-        width: 900px;
-        margin: 2% auto;
-        max-width: 95%;
-        min-height: 400px;
-        border-radius: 5px;
-        color: #FFF;
-        font-size: 1.5em;
-      }
-
-      div.sauinner {
-        width: 96%;
-        padding: 2%;
-      }
-
-      button.button {
-        background: black;
-        border: none;
-        padding: 20px 50px;
-        font-size: 1em;
-        color: white;
-        display: block;
-        margin: 40px auto 0px auto;
-        cursor: pointer;
-        font: inherit;
-        width: 100%;
-      }
-
-      div#filedrag {
-        width: 100%;
-        background: #39527b;
-        padding: 40px 20px;
-        text-align: center;
-        border: 1px dotted #971414;
-        box-sizing: border-box;
-      }
-
-      .previewarea {
-        background: rgb(126, 64, 64);
-        padding: 20px;
-        box-sizing: border-box;
-        width: 100%;
-        margin-top: 30px;
-        font-size: 12px;
-        text-align: left;
-      }
-
-      .previewarea h3 {
-        font-weight: normal;
-      }
-
-      p.ex1 {
-        padding-top: 25px;
-      }
-    </style>
-
-    <link href='http://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<link href='http://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">

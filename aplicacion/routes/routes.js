@@ -28,7 +28,7 @@ api.post('/subir_tiempodistancia', api_prueba.subir_tiempodistancia);
 api.post('/subir_zonas', api_prueba.subir_zonas);
 
 var usuarios = require('../controllers/controller_usuarios');
- 
+
 api.post('/login', usuarios.login);
 api.post('/validar_session', usuarios.validar_session);
 api.post('/listar_usuarios', usuarios.listar_usuarios);
@@ -36,9 +36,12 @@ api.post('/insertar_usuarios', usuarios.insertar_usuarios);
 api.post('/obtener_por_id_usuarios', usuarios.obtener_por_id_usuarios);
 api.post('/actualizar_usuarios', usuarios.actualizar_usuarios);
 api.post('/eliminar_usuarios/:id', usuarios.eliminar_usuarios);
+api.post('/enviar_pass', usuarios.enviar_pass);
+
+
 
 var parametros = require('../controllers/controller_parametros');
- 
+
 
 api.post('/listar_parametros', parametros.listar_parametros);
 api.post('/insertar_parametros', parametros.insertar_parametros);
@@ -47,7 +50,7 @@ api.post('/actualizar_parametros', parametros.actualizar_parametros);
 api.post('/eliminar_parametros/:id', parametros.eliminar_parametros);
 
 var tipoparametro = require('../controllers/controller_tipoparametro');
- 
+
 
 api.post('/listar_tipoparametro', tipoparametro.listar_tipoparametro);
 api.post('/insertar_tipoparametro', tipoparametro.insertar_tipoparametro);
@@ -63,222 +66,427 @@ api.post('/obtener_todo_tipoparametro', tipoparametro.obtener_todo_tipoparametro
 api.get('/', function (req, res) {
     let session = req.session.nombre_usuario;
 
+    switch (req.session.tipo_usuario) {
+        case "Super":
+            res.type('text/html');
+            res.render('usuarios', {
+                nombre_usuario: session,
+                perfil: req.session.tipo_usuario
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
+
+        case "Master":
+
+            res.type('text/html');
+            res.render('usuarios', {
+                nombre_usuario: session,
+                perfil: req.session.tipo_usuario
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
+
+        case "Optimiza":
+            res.type('text/html');
+            res.render('miscasos', {
+                nombre_usuario: session,
+                perfil: req.session.tipo_usuario
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
 
 
-    if (typeof session === 'undefined') {
-        res.type('text/html');
-        res.render('index', {
-        }, function (err, html) {
-            if (err) throw err;
-            res.send(html);
-        });
+        default:
+            res.type('text/html');
+            res.render('index', {
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
+
     }
-    else {
-        res.type('text/html');
-        res.render('usuarios', {
-            nombre_usuario: session,
-        }, function (err, html) {
-            if (err) throw err;
-            res.send(html);
-        });
-    }
+
+
 });
 
 api.get('/usuarios', function (req, res) {
     let session = req.session.nombre_usuario;
+    switch (req.session.tipo_usuario) {
+        case "Super":
+            res.type('text/html');
+            res.render('usuarios', {
+                nombre_usuario: session,
+                perfil: req.session.tipo_usuario
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
+
+        case "Master":
+
+            res.type('text/html');
+            res.render('usuarios', {
+                nombre_usuario: session,
+                perfil: req.session.tipo_usuario
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
+
+        case "Optimiza":
+            res.type('text/html');
+            res.render('miscasos', {
+                nombre_usuario: session,
+                perfil: req.session.tipo_usuario
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
 
 
+        default:
+            res.type('text/html');
+            res.render('index', {
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
 
-    if (typeof session === 'undefined') {
-        res.type('text/html');
-        res.render('index', {
-        }, function (err, html) {
-            if (err) throw err;
-            res.send(html);
-        });
     }
-    else {
-        res.type('text/html');
-        res.render('usuarios', {
-            nombre_usuario: session,
-        }, function (err, html) {
-            if (err) throw err;
-            res.send(html);
-        });
-    }
+
 
 });
 
 api.get('/parametros', function (req, res) {
     let session = req.session.nombre_usuario;
+    switch (req.session.tipo_usuario) {
+        case "Super":
+            res.type('text/html');
+            res.render('parametros', {
+                nombre_usuario: session,
+                perfil: req.session.tipo_usuario
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
 
-
-
-    if (typeof session === 'undefined') {
-        res.type('text/html');
-        res.render('index', {
-        }, function (err, html) {
-            if (err) throw err;
-            res.send(html);
-        });
+        case "Master":
+            res.type('text/html');
+            res.render('parametros', {
+                nombre_usuario: session,
+                perfil: req.session.tipo_usuario
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
+        case "Optimiza":
+            res.type('text/html');
+            res.render('miscasos', {
+                nombre_usuario: session,
+                perfil: req.session.tipo_usuario
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
+        default:
+            res.type('text/html');
+            res.render('index', {
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
     }
-    else {
-        res.type('text/html');
-        res.render('parametros', {
-            nombre_usuario: session,
-        }, function (err, html) {
-            if (err) throw err;
-            res.send(html);
-        });
+
+});
+
+ 
+
+api.get('/itinerarios', function (req, res) {
+    
+    let session = req.session.nombre_usuario;
+    switch (req.session.tipo_usuario) {
+        case "Super":
+            res.type('text/html');
+            res.render('itinerarios', {
+                nombre_usuario: session,
+                perfil: req.session.tipo_usuario
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
+
+        case "Master":
+            res.type('text/html');
+            res.render('itinerarios', {
+                nombre_usuario: session,
+                perfil: req.session.tipo_usuario
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
+        case "Optimiza":
+            res.type('text/html');
+            res.render('miscasos', {
+                nombre_usuario: session,
+                perfil: req.session.tipo_usuario
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
+        default:
+            res.type('text/html');
+            res.render('index', {
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
     }
 
 });
 
 api.get('/tipoparametro', function (req, res) {
     let session = req.session.nombre_usuario;
+    switch (req.session.tipo_usuario) {
+        case "Super":
+            res.type('text/html');
+            res.render('tipoparametro', {
+                nombre_usuario: session,
+                perfil: req.session.tipo_usuario
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
 
-
-
-    if (typeof session === 'undefined') {
-        res.type('text/html');
-        res.render('index', {
-        }, function (err, html) {
-            if (err) throw err;
-            res.send(html);
-        });
+        case "Master":
+            res.type('text/html');
+            res.render('tipoparametro', {
+                nombre_usuario: session,
+                perfil: req.session.tipo_usuario
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
+        case "Optimiza":
+            res.type('text/html');
+            res.render('miscasos', {
+                nombre_usuario: session,
+                perfil: req.session.tipo_usuario
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
+        default:
+            res.type('text/html');
+            res.render('index', {
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
     }
-    else {
-        res.type('text/html');
-        res.render('tipoparametro', {
-            nombre_usuario: session,
-        }, function (err, html) {
-            if (err) throw err;
-            res.send(html);
-        });
-    }
-
-});
-
-api.get('/itinerarios', function (req, res) {
-    let session = req.session.nombre_usuario;
-
-
-
-    if (typeof session === 'undefined') {
-        res.type('text/html');
-        res.render('index', {
-        }, function (err, html) {
-            if (err) throw err;
-            res.send(html);
-        });
-    }
-    else {
-        res.type('text/html');
-        res.render('itinerarios', {
-            nombre_usuario: session,
-        }, function (err, html) {
-            if (err) throw err;
-            res.send(html);
-        });
-    }
-
 });
 
 api.get('/tiempodistancia', function (req, res) {
     let session = req.session.nombre_usuario;
+    switch (req.session.tipo_usuario) {
+        case "Super":
+            res.type('text/html');
+            res.render('tiempodistancia', {
+                nombre_usuario: session,
+                perfil: req.session.tipo_usuario
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
 
-
-
-    if (typeof session === 'undefined') {
-        res.type('text/html');
-        res.render('index', {
-        }, function (err, html) {
-            if (err) throw err;
-            res.send(html);
-        });
+        case "Master":
+            res.type('text/html');
+            res.render('tiempodistancia', {
+                nombre_usuario: session,
+                perfil: req.session.tipo_usuario
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
+        case "Optimiza":
+            res.type('text/html');
+            res.render('miscasos', {
+                nombre_usuario: session,
+                perfil: req.session.tipo_usuario
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
+        default:
+            res.type('text/html');
+            res.render('index', {
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
     }
-    else {
-        res.type('text/html');
-        res.render('tiempodistancia', {
-            nombre_usuario: session,
-        }, function (err, html) {
-            if (err) throw err;
-            res.send(html);
-        });
-    }
-
 });
 
 api.get('/zonas', function (req, res) {
     let session = req.session.nombre_usuario;
+    switch (req.session.tipo_usuario) {
+        case "Super":
+            res.type('text/html');
+            res.render('zonas', {
+                nombre_usuario: session,
+                perfil: req.session.tipo_usuario
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
 
-
-
-    if (typeof session === 'undefined') {
-        res.type('text/html');
-        res.render('index', {
-        }, function (err, html) {
-            if (err) throw err;
-            res.send(html);
-        });
+        case "Master":
+            res.type('text/html');
+            res.render('zonas', {
+                nombre_usuario: session,
+                perfil: req.session.tipo_usuario
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
+        case "Optimiza":
+            res.type('text/html');
+            res.render('miscasos', {
+                nombre_usuario: session,
+                perfil: req.session.tipo_usuario
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
+        default:
+            res.type('text/html');
+            res.render('index', {
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
     }
-    else {
-        res.type('text/html');
-        res.render('zonas', {
-            nombre_usuario: session,
-        }, function (err, html) {
-            if (err) throw err;
-            res.send(html);
-        });
-    }
+
 
 });
 
 api.get('/miscasos', function (req, res) {
     let session = req.session.nombre_usuario;
+    switch (req.session.tipo_usuario) {
+        case "Super":
+            res.type('text/html');
+            res.render('miscasos', {
+                nombre_usuario: session,
+                perfil: req.session.tipo_usuario
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
 
-
-
-    if (typeof session === 'undefined') {
-        res.type('text/html');
-        res.render('index', {
-        }, function (err, html) {
-            if (err) throw err;
-            res.send(html);
-        });
-    }
-    else {
-        res.type('text/html');
-        res.render('miscasos', {
-            nombre_usuario: session,
-        }, function (err, html) {
-            if (err) throw err;
-            res.send(html);
-        });
+        case "Master":
+            res.type('text/html');
+            res.render('usuarios', {
+                nombre_usuario: session,
+                perfil: req.session.tipo_usuario
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
+        case "Optimiza":
+            res.type('text/html');
+            res.render('miscasos', {
+                nombre_usuario: session,
+                perfil: req.session.tipo_usuario
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
+        default:
+            res.type('text/html');
+            res.render('index', {
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
     }
 
 });
 api.get('/otroscasos', function (req, res) {
     let session = req.session.nombre_usuario;
+    switch (req.session.tipo_usuario) {
+        case "Super":
+            res.type('text/html');
+            res.render('otroscasos', {
+                nombre_usuario: session,
+                perfil: req.session.tipo_usuario
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
 
-
-
-    if (typeof session === 'undefined') {
-        res.type('text/html');
-        res.render('index', {
-        }, function (err, html) {
-            if (err) throw err;
-            res.send(html);
-        });
-    }
-    else {
-        res.type('text/html');
-        res.render('otroscasos', {
-            nombre_usuario: session,
-        }, function (err, html) {
-            if (err) throw err;
-            res.send(html);
-        });
+        case "Master":
+            res.type('text/html');
+            res.render('usuarios', {
+                nombre_usuario: session,
+                perfil: req.session.tipo_usuario
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
+        case "Optimiza":
+            res.type('text/html');
+            res.render('otroscasos', {
+                nombre_usuario: session,
+                perfil: req.session.tipo_usuario
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
+        default:
+            res.type('text/html');
+            res.render('index', {
+            }, function (err, html) {
+                if (err) throw err;
+                res.send(html);
+            });
+            break;
     }
 
 });

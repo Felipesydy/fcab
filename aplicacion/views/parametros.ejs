@@ -278,7 +278,6 @@
           $('[name="descripcion"]').val(data.descripcion);
           $('[name="parametro"]').find('option').remove();// Limpio el Select
           $('[name="parametro"]').append('<option value="'+data.parametro+'">'+data.nombre_parametro+'</option>');
-
           $('#modal_parametros').modal('show'); 
           $('.modal-title').text('Editar Usuarios'); 
 
@@ -288,7 +287,6 @@
         }
       });
     }
-
     function eliminar(id) {
       let idOrderVtex = id.toString();
       idOrderVtex = idOrderVtex.replace('/', '');
