@@ -149,6 +149,69 @@ const csv_to_json = ((data) => {
     }
 })
 
+const csv_to_json_zona = ((data) => {
+
+    try {
+        return new Promise(resolve => {
+            request({
+                url: "http://localhost/csvtojson_zona",
+                method: "POST",
+                json: true,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: data
+            }, function (error, response, body) {
+                console.log("================ Tranformar CSV ================");
+                console.log(body);
+                console.log(error);
+                console.log(response);
+                if (body.status == 200) {
+                    console.log(body.payload);
+                    resolve({ 'status': true, 'payload': body.payload });
+                } else {
+                    resolve({ 'status': false, 'payload': "CSV debe ser parseado en tabuliación" });
+                }
+
+            });
+        });
+    } catch (err) {
+        throw new Error('Error Obtener Reporte ' + err);
+    }
+})
+
+const csv_to_json_timedist = ((data) => {
+
+    try {
+        return new Promise(resolve => {
+            request({
+                url: "http://localhost/csvtojson_timedist",
+                method: "POST",
+                json: true,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: data
+            }, function (error, response, body) {
+                console.log("================ Tranformar CSV ================");
+                console.log(body);
+                console.log(error);
+                console.log(response);
+                if (body.status == 200) {
+                    console.log(body.payload);
+                    resolve({ 'status': true, 'payload': body.payload });
+                } else {
+                    resolve({ 'status': false, 'payload': "CSV debe ser parseado en tabuliación" });
+                }
+
+            });
+        });
+    } catch (err) {
+        throw new Error('Error Obtener Reporte ' + err);
+    }
+})
+
+
 /*=================ITINERARIOS==============*/
 
 /*=================TIEMPODISTANCIA==============*/
@@ -195,7 +258,7 @@ const subir_tiempodistancia = (async (req, res) => {
                 ruta: ruta
             }
             let salida;
-            await csv_to_json(json_ruta).then(function (result) {
+            await csv_to_json_timedist(json_ruta).then(function (result) {
                 salida = (result);
             });
            
@@ -297,7 +360,7 @@ const subir_zonas = (async (req, res) => {
                 ruta: ruta
             }
             let salida;
-            await csv_to_json(json_ruta).then(function (result) {
+            await csv_to_json_zona(json_ruta).then(function (result) {
                 salida = (result);
             });
           

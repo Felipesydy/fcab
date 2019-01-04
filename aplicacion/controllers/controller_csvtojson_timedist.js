@@ -5,7 +5,7 @@ var detect = require('detect-csv');
 
 const gyml = yaml.safeLoad(fs.readFileSync('./config.yml', 'utf8'));
 
-const csvtojson = (req, res) => {
+const csvtojson_timedist = (req, res) => {
 
     console.log(req.body)
     var options = {
@@ -21,14 +21,16 @@ const csvtojson = (req, res) => {
         let keys = "";       
         for(var key in result[0]){ keys = keys+key;}
         console.log(keys);
-        if ("codigo" == keys.slice(0,6) && "origen" == keys.slice(6,12) && "evento" == keys.slice(12,18) && "hr_depart" == keys.slice(18,27)){
-            console.log("genial");
+        if ("origen" == keys.slice(0,6) && "base" == keys.slice(6,10) && "tiempo" == keys.slice(10,16) && "distancia" == keys.slice(16,25)){
+
             res.json({"status":"200","message":"Succefull", "payload":result})
         }else{
-            res.json({"status":"500","message":"Error", "payload":'Error en los nombres de columnas (codigo - origen - evento - hr_depart)'})
+
+            res.json({"status":"500","message":"Error", "payload":'Error en los nombres de columnas (name_pto - ubic)'})
         }
         
     } else {
+        
         res.json({"status":"500","message":"Error", "payload":'CSV debe tener delimitador de tabulación'})
     }
 }catch(err){
@@ -39,4 +41,4 @@ const csvtojson = (req, res) => {
 
 }
 
-module.exports = { csvtojson }
+module.exports = { csvtojson_timedist }

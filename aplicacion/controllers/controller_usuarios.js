@@ -12,7 +12,7 @@ const login = (async (req, res) => {
     console.log("Error en Parametros de Entrada");
     mensaje = {
       status: false,
-      message: "Error en Parametros de Entrada"
+      message: "Ingrese usuario y contraseña"
     }
     res.json(mensaje);
   } else {

@@ -8,11 +8,15 @@ var api = express.Router();
 
 var itinerarios = require('../controllers/controller_insertItinerario');
 var csvtojson = require('../controllers/controller_csvtojson');
+var csvtojson_zona = require('../controllers/controller_csvtojson_zona');
+var csvtojson_timedist = require('../controllers/controller_csvtojson_timedist');
 var tiempoDistancia = require('../controllers/controller_tiempoDistancia');
 var zonas = require('../controllers/controller_zonas');
 
 api.post('/insertItinerarios', itinerarios.insertItinerario);
 api.post('/csvtojson', csvtojson.csvtojson);
+api.post('/csvtojson_zona', csvtojson_zona.csvtojson_zona);
+api.post('/csvtojson_timedist', csvtojson_timedist.csvtojson_timedist);
 api.post('/tiempoDistancia', tiempoDistancia.tiempoDistancia);
 api.post('/zonas', zonas.zonas);
 
