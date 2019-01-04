@@ -140,7 +140,7 @@ const obtener_por_id_usuarios = (async (req, res) => { // Devolver al formulario
 const actualizar_usuarios = (async (req, res) => {
   let data, mensaje;
 
-  await validar(req.body).then(function (result) {
+  await validar_editar(req.body).then(function (result) {
     data = (result);
   });
   if (data.status) {
@@ -174,7 +174,64 @@ const eliminar_usuarios = (async (req, res) => {
 
 });
 
+function validar_editar(body) {
+  const User = require('../models/usuarios');
+  console.log("Entro al validar");
+  try {
+    return new Promise(async resolve => {
+      let data;
+      data = { error_string: [], inputerror: [], status: true };
 
+      if (body.nombre == '') {
+        data.inputerror.push((('nombre')));
+        data.error_string.push((('Debes indicar un nombre')));
+        data.status = false;
+      }
+      if (body.email == '') {
+        data.inputerror.push((('email')));
+        data.error_string.push((('Debes indicar un email')));
+        data.status = false;
+      }
+      if (body.usuario == '') {
+        data.inputerror.push((('usuario')));
+        data.error_string.push((('Debes indicar un usuario')));
+        data.status = false;
+      }
+      if (body.clave == '') {
+        data.inputerror.push((('clave')));
+        data.error_string.push((('Debes indicar una clave')));
+        data.status = false;
+      }
+      if (body.clave2 == '') {
+        data.inputerror.push((('clave2')));
+        data.error_string.push((('Debes reingresar una clave')));
+        data.status = false;
+      }
+      if (body.clave2 != body.clave) {
+        data.inputerror.push((('clave2')));
+        data.error_string.push((('Las claves no coinciden')));
+        data.status = false;
+      }
+      /* */
+      if (body.tipo == '0') {
+        data.inputerror.push((('tipo')));
+        data.error_string.push((('Debes seleccionar un tipo de usuario')));
+        data.status = false;
+      }
+
+      if (data.status === false) {
+        console.log(data);
+        resolve(data);
+      } else {
+        resolve(data);
+      }
+    });
+  } catch (err) {
+    throw new Error('Error al validar formulario ' + err);
+  }
+
+
+}
 
 function validar(body) {
   const User = require('../models/usuarios');
